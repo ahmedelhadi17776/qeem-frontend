@@ -61,5 +61,39 @@
   --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
 }
 
+/* Base component classes using tokens (design system) */
+.card {
+  background-color: var(--q-surface);
+  color: var(--q-text-main);
+  border: 1px solid var(--q-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.input-field {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--q-border);
+  border-radius: var(--radius-md);
+  background-color: var(--q-surface);
+  color: var(--q-text-main);
+}
+.input-field:focus {
+  outline: 2px solid color-mix(in srgb, var(--q-accent) 40%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--q-accent) 20%, transparent);
+}
+
+.rate-card {
+  background: var(--q-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-md);
+  color: var(--q-text-main);
+}
+.rate-card .tier-min { border-left: 4px solid var(--q-danger); padding-left: var(--space-md); }
+.rate-card .tier-competitive { border-left: 4px solid var(--q-accent); padding-left: var(--space-md); }
+.rate-card .tier-premium { border-left: 4px solid color-mix(in srgb, var(--q-accent) 60%, black 10%); padding-left: var(--space-md); }
+
 
 
