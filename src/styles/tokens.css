@@ -1,18 +1,18 @@
 :root {
   /* Brand Colors */
-  --q-primary: #1A2B48;
-  --q-accent: #22C55E;
-  --q-accent-dark: #16A34A;
-  --q-text-main: #1A2B48;
+  --q-primary: #1a2b48;
+  --q-accent: #22c55e;
+  --q-accent-dark: #16a34a;
+  --q-text-main: #1a2b48;
   --q-text-body: #334155;
-  --q-text-muted: #64748B;
-  --q-bg: #F1F5F9;
-  --q-surface: #FFFFFF;
-  --q-border: #E2E8F0;
-  --q-danger: #EF4444;
-  --q-warning: #F59E0B;
-  --q-info: #3B82F6;
-  --q-success: #22C55E;
+  --q-text-muted: #64748b;
+  --q-bg: #f1f5f9;
+  --q-surface: #ffffff;
+  --q-border: #e2e8f0;
+  --q-danger: #ef4444;
+  --q-warning: #f59e0b;
+  --q-info: #3b82f6;
+  --q-success: #22c55e;
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -45,15 +45,15 @@
   --leading-normal: 1.5;
 }
 
-[data-theme="dark"] {
-  --q-primary: #1A2B48;
-  --q-accent: #22C55E;
-  --q-accent-dark: #16A34A;
-  --q-text-main: #F8FAFC;
-  --q-text-body: #94A3B8;
-  --q-text-muted: #64748B;
-  --q-bg: #0F172A;
-  --q-surface: #1E293B;
+[data-theme='dark'] {
+  --q-primary: #1a2b48;
+  --q-accent: #22c55e;
+  --q-accent-dark: #16a34a;
+  --q-text-main: #f8fafc;
+  --q-text-body: #94a3b8;
+  --q-text-muted: #64748b;
+  --q-bg: #0f172a;
+  --q-surface: #1e293b;
   --q-border: #334155;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
@@ -91,9 +91,15 @@
   box-shadow: var(--shadow-md);
   color: var(--q-text-main);
 }
-.rate-card .tier-min { border-left: 4px solid var(--q-danger); padding-left: var(--space-md); }
-.rate-card .tier-competitive { border-left: 4px solid var(--q-accent); padding-left: var(--space-md); }
-.rate-card .tier-premium { border-left: 4px solid color-mix(in srgb, var(--q-accent) 60%, black 10%); padding-left: var(--space-md); }
-
-
-
+.rate-card .tier-min {
+  border-left: 4px solid var(--q-danger);
+  padding-left: var(--space-md);
+}
+.rate-card .tier-competitive {
+  border-left: 4px solid var(--q-accent);
+  padding-left: var(--space-md);
+}
+.rate-card .tier-premium {
+  border-left: 4px solid color-mix(in srgb, var(--q-accent) 60%, black 10%);
+  padding-left: var(--space-md);
+}

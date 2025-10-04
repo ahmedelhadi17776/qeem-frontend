@@ -1,116 +1,116 @@
 name: Frontend CI
 
 on:
-    pull_request:
-        branches: [develop, main]
-    push:
-        branches: [develop, main]
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-            - name: Set up Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "20"
-                  cache: "npm"
-                  cache-dependency-path: package-lock.json
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
 
-            - name: Install dependencies
-              run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-            - name: Lint (ESLint)
-              run: npm run lint
+      - name: Lint (ESLint)
+        run: npm run lint
 
-            - name: Type check
-              run: npm run type-check
+      - name: Type check
+        run: npm run type-check
 
-            - name: Run tests
-              run: npm test -- --coverage --watchAll=false
+      - name: Run tests
+        run: npm test -- --coverage --watchAll=false
 
-            - name: Upload coverage to Codecov
-              uses: codecov/codecov-action@v3
-              with:
-                  file: ./coverage/lcov.info
-                  flags: frontend
-                  name: frontend-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/lcov.info
+          flags: frontend
+          name: frontend-coverage
 
-            - name: Build application
-              run: npm run build
+      - name: Build application
+        run: npm run build
 
-    lighthouse:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-            - name: Set up Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "20"
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-            - name: Install dependencies
-              run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-            - name: Build application
-              run: npm run build
+      - name: Build application
+        run: npm run build
 
-            - name: Start application
-              run: |
-                  npm start &
-                  sleep 10
+      - name: Start application
+        run: |
+          npm start &
+          sleep 10
 
-            - name: Run Lighthouse CI
-              uses: treosh/lighthouse-ci-action@v10
-              with:
-                  urls: |
-                      http://localhost:3000
-                  configPath: "./lighthouse.config.js"
-                  uploadArtifacts: true
-                  temporaryPublicStorage: true
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          urls: |
+            http://localhost:3000
+          configPath: './lighthouse.config.js'
+          uploadArtifacts: true
+          temporaryPublicStorage: true
 
-    docker:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-            - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-            - name: Build Docker image
-              run: docker build -t qeem-frontend:test .
+      - name: Build Docker image
+        run: docker build -t qeem-frontend:test .
 
-            - name: Test Docker image
-              run: |
-                  docker run --rm -d --name qeem-frontend-test -p 3000:3000 qeem-frontend:test
-                  sleep 10
-                  curl -f http://localhost:3000 || exit 1
-                  docker stop qeem-frontend-test
+      - name: Test Docker image
+        run: |
+          docker run --rm -d --name qeem-frontend-test -p 3000:3000 qeem-frontend:test
+          sleep 10
+          curl -f http://localhost:3000 || exit 1
+          docker stop qeem-frontend-test
 
-    accessibility:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
+  accessibility:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-            - name: Set up Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "20"
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-            - name: Install dependencies
-              run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-            - name: Build application
-              run: npm run build
+      - name: Build application
+        run: npm run build
 
-            - name: Start application
-              run: |
-                  npm start &
-                  sleep 10
+      - name: Start application
+        run: |
+          npm start &
+          sleep 10
 
-            - name: Run accessibility tests
-              run: |
-                  npm install -g @axe-core/cli
-                  axe http://localhost:3000 --exit
+      - name: Run accessibility tests
+        run: |
+          npm install -g @axe-core/cli
+          axe http://localhost:3000 --exit

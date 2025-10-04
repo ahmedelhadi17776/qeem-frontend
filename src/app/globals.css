@@ -1,34 +1,4 @@
+/* Import design system styles */
 @import '../styles/tokens.css';
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background-color: var(--q-bg);
-  color: var(--q-text-body);
-  line-height: var(--leading-normal);
-}
-
-.container { width: 100%; margin: 0 auto; padding: var(--space-md); }
-h1 { color: var(--q-text-main); }
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-sm);
-  font-weight: var(--font-weight-bold);
-  border: 0;
-  border-radius: var(--radius-md);
-  transition: transform 150ms ease, box-shadow 150ms ease;
-}
-.btn-primary {
-  background: linear-gradient(180deg, var(--q-accent), var(--q-accent-dark));
-  color: #fff;
-  padding: 0.875rem 1.75rem;
-  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.24);
-}
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(34, 197, 94, 0.32); }
-
-
-
+@import '../styles/base.css';
+@import '../styles/components.css';
