@@ -1,6 +1,38 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  
+  // Performance optimizations
+  swcMinify: true,
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['clsx', '@tanstack/react-query'],
+  },
+  
+  // Webpack optimizations for development
+  webpack: (config, { dev, isServer }) => {
+    if (dev) {
+      // Faster compilation in development
+      config.watchOptions = {
+        poll: 1000,
+        aggregateTimeout: 300,
+      };
+      
+      // Optimize module resolution
+      config.resolve.symlinks = false;
+      
+      // Reduce bundle size by excluding dev dependencies
+      config.externals = config.externals || [];
+      if (!isServer) {
+        config.externals.push({
+          'fsevents': 'commonjs fsevents',
+        });
+      }
+    }
+    
+    return config;
+  },
+  
   images: {
     domains: ['localhost', 'api.qeem.com'],
   },

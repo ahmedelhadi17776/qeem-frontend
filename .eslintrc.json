@@ -1,7 +1,8 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "."
   },
   "rules": {
     "prefer-const": "error",
@@ -38,7 +39,8 @@
         "**/__tests__/*.tsx"
       ],
       "parserOptions": {
-        "project": "./tsconfig.test.json"
+        "project": "./tsconfig.test.json",
+        "tsconfigRootDir": "."
       },
       "rules": {
         "@typescript-eslint/no-explicit-any": "off",
