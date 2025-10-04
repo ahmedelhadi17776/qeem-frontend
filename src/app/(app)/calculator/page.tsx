@@ -7,17 +7,7 @@ const RateCalculatorForm = dynamic(
       default: mod.RateCalculatorForm,
     })),
   {
-    ssr: true,
-    loading: () => (
-      <div className='space-y-6 p-6'>
-        <div className='h-8 bg-surface animate-pulse rounded' />
-        <div className='space-y-4'>
-          <div className='h-12 bg-surface animate-pulse rounded' />
-          <div className='h-12 bg-surface animate-pulse rounded' />
-          <div className='h-12 bg-surface animate-pulse rounded' />
-        </div>
-      </div>
-    ),
+    loading: () => null, // Faster compilation in dev
   }
 );
 

@@ -6,16 +6,14 @@ import dynamic from 'next/dynamic';
 const Header = dynamic(
   () => import('@/components/layouts').then(mod => ({ default: mod.Header })),
   {
-    ssr: true,
-    loading: () => <div className='h-16 bg-surface animate-pulse' />,
+    loading: () => null, // Faster compilation in dev
   }
 );
 
 const Sidebar = dynamic(
   () => import('@/components/layouts').then(mod => ({ default: mod.Sidebar })),
   {
-    ssr: true,
-    loading: () => <div className='w-64 bg-surface animate-pulse' />,
+    loading: () => null, // Faster compilation in dev
   }
 );
 

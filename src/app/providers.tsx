@@ -36,7 +36,7 @@ export function Providers({ children }: ProvidersProps) {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      {process.env.NODE_ENV === 'development' && (
+      {process.env.NEXT_PUBLIC_ENABLE_DEVTOOLS === 'true' && (
         <ReactQueryDevtools initialIsOpen={false} />
       )}
     </QueryClientProvider>

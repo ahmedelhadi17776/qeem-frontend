@@ -15,8 +15,9 @@ class PerformanceMonitor {
   private observers: Set<(metrics: PerformanceMetrics[]) => void> = new Set();
 
   private constructor() {
-    if (typeof window !== 'undefined') {
-      // Monitor Core Web Vitals
+    if (typeof window !== 'undefined' && 
+        process.env.NEXT_PUBLIC_ENABLE_PERFORMANCE_MONITORING === 'true') {
+      // Monitor Core Web Vitals only when enabled
       this.observeWebVitals();
     }
   }
@@ -32,7 +33,8 @@ class PerformanceMonitor {
    * Start timing a performance metric
    */
   startTiming(name: string, metadata?: Record<string, unknown>): void {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || 
+        process.env.NEXT_PUBLIC_ENABLE_PERFORMANCE_MONITORING !== 'true') return;
 
     this.metrics.set(name, {
       name,
@@ -45,7 +47,8 @@ class PerformanceMonitor {
    * End timing a performance metric
    */
   endTiming(name: string): PerformanceMetrics | null {
-    if (typeof window === 'undefined') return null;
+    if (typeof window === 'undefined' || 
+        process.env.NEXT_PUBLIC_ENABLE_PERFORMANCE_MONITORING !== 'true') return null;
 
     const metric = this.metrics.get(name);
     if (!metric) return null;
