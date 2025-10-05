@@ -46,17 +46,15 @@ export function Sidebar({ className }: SidebarProps) {
         className={clsx(
           'hidden lg:block bg-surface dark:bg-slate-800 border-r border-border dark:border-slate-600 p-6 overflow-y-auto',
           'lg:fixed lg:left-0 lg:top-16 lg:bottom-0 lg:w-70',
-          className
+          className,
         )}
       >
-        <nav className='h-full'>
-          <div className='mb-6'>
-            <h2 className='text-lg font-bold text-text-main dark:text-slate-100'>
-              Navigation
-            </h2>
+        <nav className="h-full">
+          <div className="mb-6">
+            <h2 className="text-lg font-bold text-text-main dark:text-slate-100">Navigation</h2>
           </div>
 
-          <ul className='space-y-1'>
+          <ul className="space-y-1">
             {navigationItems.map(item => {
               const isActive = pathname === item.href;
               return (
@@ -68,10 +66,10 @@ export function Sidebar({ className }: SidebarProps) {
                       'hover:bg-accent/10 hover:text-accent',
                       isActive
                         ? 'bg-accent/10 text-accent'
-                        : 'text-text-body dark:text-slate-300 hover:text-text-main dark:hover:text-slate-100'
+                        : 'text-text-body dark:text-slate-300 hover:text-text-main dark:hover:text-slate-100',
                     )}
                   >
-                    <span className='text-lg'>{item.icon}</span>
+                    <span className="text-lg">{item.icon}</span>
                     <span>{item.name}</span>
                   </Link>
                 </li>
@@ -82,8 +80,8 @@ export function Sidebar({ className }: SidebarProps) {
       </aside>
 
       {/* Mobile Bottom Navigation */}
-      <nav className='lg:hidden fixed bottom-0 left-0 right-0 bg-surface dark:bg-slate-800 border-t border-border dark:border-slate-600 z-sticky'>
-        <div className='grid grid-cols-5 h-18 px-2 py-2'>
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-surface dark:bg-slate-800 border-t border-border dark:border-slate-600 z-sticky">
+        <div className="grid grid-cols-5 h-18 px-2 py-2">
           {navigationItems.map(item => {
             const isActive = pathname === item.href;
             return (
@@ -95,11 +93,11 @@ export function Sidebar({ className }: SidebarProps) {
                   'hover:bg-accent/10',
                   isActive
                     ? 'text-accent'
-                    : 'text-text-body dark:text-slate-300 hover:text-text-main dark:hover:text-slate-100'
+                    : 'text-text-body dark:text-slate-300 hover:text-text-main dark:hover:text-slate-100',
                 )}
               >
-                <span className='text-xl'>{item.icon}</span>
-                <span className='text-xs font-medium'>{item.name}</span>
+                <span className="text-xl">{item.icon}</span>
+                <span className="text-xs font-medium">{item.name}</span>
               </Link>
             );
           })}

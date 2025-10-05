@@ -12,10 +12,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  (
-    { label, error, helperText, leftIcon, rightIcon, className, id, ...props },
-    ref
-  ) => {
+  ({ label, error, helperText, leftIcon, rightIcon, className, id, ...props }, ref) => {
     const generatedId = useId();
     const inputId = id ?? generatedId;
     const hasError = Boolean(error);
@@ -23,18 +20,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const hasRightIcon = Boolean(rightIcon);
 
     return (
-      <div className='w-full'>
+      <div className="w-full">
         {label && (
-          <label
-            htmlFor={inputId}
-            className='block text-sm font-semibold text-text-main dark:text-slate-100 mb-2'
-          >
+          <label htmlFor={inputId} className="block text-sm font-semibold text-text-main dark:text-slate-100 mb-2">
             {label}
           </label>
         )}
-        <div className='relative'>
+        <div className="relative">
           {leftIcon && (
-            <div className='absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-muted dark:text-slate-400 pointer-events-none'>
+            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-muted dark:text-slate-400 pointer-events-none">
               {leftIcon}
             </div>
           )}
@@ -46,31 +40,26 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               'placeholder:text-text-muted dark:placeholder:text-slate-400 placeholder:opacity-70',
               'focus:border-accent focus:ring-4 focus:ring-accent/10 focus:outline-none',
               'disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-bg dark:disabled:bg-slate-900',
-              hasError &&
-                'border-danger focus:border-danger focus:ring-danger/10',
+              hasError && 'border-danger focus:border-danger focus:ring-danger/10',
               hasLeftIcon && 'pl-12',
               hasRightIcon && 'pr-12',
-              className
+              className,
             )}
             {...props}
           />
           {rightIcon && (
-            <div className='absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-muted dark:text-slate-400 pointer-events-none'>
+            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-muted dark:text-slate-400 pointer-events-none">
               {rightIcon}
             </div>
           )}
         </div>
-        {error && (
-          <span className='block mt-1 text-sm text-danger'>{error}</span>
-        )}
+        {error && <span className="block mt-1 text-sm text-danger">{error}</span>}
         {helperText && !error && (
-          <span className='block mt-1 text-sm text-text-muted dark:text-slate-400'>
-            {helperText}
-          </span>
+          <span className="block mt-1 text-sm text-text-muted dark:text-slate-400">{helperText}</span>
         )}
       </div>
     );
-  }
+  },
 );
 
 Input.displayName = 'Input';

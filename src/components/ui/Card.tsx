@@ -8,12 +8,8 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
-  (
-    { variant = 'default', padding = 'md', className, children, ...props },
-    ref
-  ) => {
-    const baseClasses =
-      'bg-surface dark:bg-slate-800 rounded-lg transition-all duration-DEFAULT ease-out';
+  ({ variant = 'default', padding = 'md', className, children, ...props }, ref) => {
+    const baseClasses = 'bg-surface dark:bg-slate-800 rounded-lg transition-all duration-DEFAULT ease-out';
 
     const variantClasses = {
       default: 'border border-border dark:border-slate-600',
@@ -31,18 +27,13 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     return (
       <div
         ref={ref}
-        className={clsx(
-          baseClasses,
-          variantClasses[variant],
-          paddingClasses[padding],
-          className
-        )}
+        className={clsx(baseClasses, variantClasses[variant], paddingClasses[padding], className)}
         {...props}
       >
         {children}
       </div>
     );
-  }
+  },
 );
 
 Card.displayName = 'Card';
@@ -52,22 +43,13 @@ export interface CardHeaderProps extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
 
-export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
-  ({ className, children, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className={clsx(
-          'p-6 border-b border-border dark:border-slate-600',
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </div>
-    );
-  }
-);
+export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(({ className, children, ...props }, ref) => {
+  return (
+    <div ref={ref} className={clsx('p-6 border-b border-border dark:border-slate-600', className)} {...props}>
+      {children}
+    </div>
+  );
+});
 
 CardHeader.displayName = 'CardHeader';
 
@@ -75,15 +57,13 @@ export interface CardBodyProps extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
 
-export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
-  ({ className, children, ...props }, ref) => {
-    return (
-      <div ref={ref} className={clsx('p-6', className)} {...props}>
-        {children}
-      </div>
-    );
-  }
-);
+export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(({ className, children, ...props }, ref) => {
+  return (
+    <div ref={ref} className={clsx('p-6', className)} {...props}>
+      {children}
+    </div>
+  );
+});
 
 CardBody.displayName = 'CardBody';
 
@@ -91,21 +71,16 @@ export interface CardFooterProps extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
 
-export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
-  ({ className, children, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className={clsx(
-          'p-6 border-t border-border dark:border-slate-600 bg-bg/30 dark:bg-slate-900/30',
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </div>
-    );
-  }
-);
+export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(({ className, children, ...props }, ref) => {
+  return (
+    <div
+      ref={ref}
+      className={clsx('p-6 border-t border-border dark:border-slate-600 bg-bg/30 dark:bg-slate-900/30', className)}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+});
 
 CardFooter.displayName = 'CardFooter';

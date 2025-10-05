@@ -5,8 +5,7 @@ import Script from 'next/script';
 
 export const metadata = {
   title: 'Qeem - Know Your Value',
-  description:
-    "Egypt's AI-powered freelance rate calculator. Discover your true worth and negotiate with confidence.",
+  description: "Egypt's AI-powered freelance rate calculator. Discover your true worth and negotiate with confidence.",
   keywords: ['freelance', 'rates', 'calculator', 'Egypt', 'AI', 'negotiation'],
   authors: [{ name: 'Qeem Team' }],
   icons: {
@@ -34,9 +33,9 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <Script id='theme-init' strategy='beforeInteractive'>
+        <Script id="theme-init" strategy="beforeInteractive">
           {`
             (function() {
               try {

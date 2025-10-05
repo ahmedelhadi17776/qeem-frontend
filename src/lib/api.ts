@@ -1,10 +1,4 @@
-import {
-  RateRequest,
-  RateResponse,
-  AuthResponse,
-  User,
-  ApiError,
-} from '@/types/api';
+import { RateRequest, RateResponse, AuthResponse, User, ApiError } from '@/types/api';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000';
 
@@ -24,10 +18,7 @@ export class ApiClient {
     this.token = undefined;
   }
 
-  private async request<T>(
-    endpoint: string,
-    options: RequestInit = {}
-  ): Promise<T> {
+  private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
@@ -61,11 +52,7 @@ export class ApiClient {
     });
   }
 
-  async register(userData: {
-    email: string;
-    password: string;
-    name: string;
-  }): Promise<AuthResponse> {
+  async register(userData: { email: string; password: string; name: string }): Promise<AuthResponse> {
     return this.request<AuthResponse>('/api/v1/auth/register', {
       method: 'POST',
       body: JSON.stringify(userData),

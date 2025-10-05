@@ -7,10 +7,7 @@
     "prefer-const": "error",
     "no-var": "error",
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      { "argsIgnorePattern": "^_" }
-    ],
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/prefer-optional-chain": "warn",
     "@typescript-eslint/prefer-nullish-coalescing": "warn",
@@ -31,12 +28,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "**/*.test.ts",
-        "**/*.test.tsx",
-        "**/__tests__/*.ts",
-        "**/__tests__/*.tsx"
-      ],
+      "files": ["**/*.test.ts", "**/*.test.tsx", "**/__tests__/*.ts", "**/__tests__/*.tsx"],
       "parserOptions": {
         "project": "./tsconfig.test.json"
       },

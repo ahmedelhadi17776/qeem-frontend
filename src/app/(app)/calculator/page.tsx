@@ -8,7 +8,7 @@ const RateCalculatorForm = dynamic(
     })),
   {
     loading: () => null, // Faster compilation in dev
-  }
+  },
 );
 
 export default function CalculatorPage() {

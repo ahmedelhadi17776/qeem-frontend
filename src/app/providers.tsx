@@ -30,15 +30,13 @@ export function Providers({ children }: ProvidersProps) {
             retry: false,
           },
         },
-      })
+      }),
   );
 
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      {process.env.NEXT_PUBLIC_ENABLE_DEVTOOLS === 'true' && (
-        <ReactQueryDevtools initialIsOpen={false} />
-      )}
+      {process.env.NEXT_PUBLIC_ENABLE_DEVTOOLS === 'true' && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
   );
 }

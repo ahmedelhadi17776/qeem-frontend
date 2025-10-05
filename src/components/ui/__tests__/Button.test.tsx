@@ -20,39 +20,35 @@ describe('Button', () => {
   it('applies primary variant by default', () => {
     render(<Button>Primary Button</Button>);
     const button = screen.getByText('Primary Button');
-    expect(button).toHaveClass(
-      'bg-gradient-to-b',
-      'from-accent',
-      'to-accent-dark'
-    );
+    expect(button).toHaveClass('bg-gradient-to-b', 'from-accent', 'to-accent-dark');
   });
 
   it('applies secondary variant', () => {
-    render(<Button variant='secondary'>Secondary Button</Button>);
+    render(<Button variant="secondary">Secondary Button</Button>);
     const button = screen.getByText('Secondary Button');
     expect(button).toHaveClass('bg-transparent', 'border-2', 'border-primary');
   });
 
   it('applies ghost variant', () => {
-    render(<Button variant='ghost'>Ghost Button</Button>);
+    render(<Button variant="ghost">Ghost Button</Button>);
     const button = screen.getByText('Ghost Button');
     expect(button).toHaveClass('bg-transparent', 'text-text-body');
   });
 
   it('applies danger variant', () => {
-    render(<Button variant='danger'>Danger Button</Button>);
+    render(<Button variant="danger">Danger Button</Button>);
     const button = screen.getByText('Danger Button');
     expect(button).toHaveClass('bg-danger', 'text-white');
   });
 
   it('applies small size', () => {
-    render(<Button size='sm'>Small Button</Button>);
+    render(<Button size="sm">Small Button</Button>);
     const button = screen.getByText('Small Button');
     expect(button).toHaveClass('px-4', 'py-2', 'text-sm');
   });
 
   it('applies large size', () => {
-    render(<Button size='lg'>Large Button</Button>);
+    render(<Button size="lg">Large Button</Button>);
     const button = screen.getByText('Large Button');
     expect(button).toHaveClass('px-8', 'py-4', 'text-lg');
   });
@@ -80,7 +76,7 @@ describe('Button', () => {
     render(
       <Button disabled onClick={handleClick}>
         Disabled Button
-      </Button>
+      </Button>,
     );
 
     fireEvent.click(screen.getByText('Disabled Button'));
@@ -88,7 +84,7 @@ describe('Button', () => {
   });
 
   it('applies custom className', () => {
-    render(<Button className='custom-class'>Custom Button</Button>);
+    render(<Button className="custom-class">Custom Button</Button>);
     const button = screen.getByText('Custom Button');
     expect(button).toHaveClass('custom-class');
   });

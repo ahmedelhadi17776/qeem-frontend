@@ -320,7 +320,7 @@ function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className='p-2 rounded-full text-text-body hover:bg-primary/6 dark:text-text-main dark:hover:bg-text-main/6'
+      className="p-2 rounded-full text-text-body hover:bg-primary/6 dark:text-text-main dark:hover:bg-text-main/6"
     >
       {effectiveTheme === 'dark' ? '🌙' : '☀️'}
     </button>

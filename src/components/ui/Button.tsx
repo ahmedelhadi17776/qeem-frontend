@@ -9,18 +9,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      variant = 'primary',
-      size = 'md',
-      loading = false,
-      className,
-      children,
-      disabled,
-      ...props
-    },
-    ref
-  ) => {
+  ({ variant = 'primary', size = 'md', loading = false, className, children, disabled, ...props }, ref) => {
     const baseClasses =
       'relative inline-flex items-center justify-center gap-2 font-bold text-center whitespace-nowrap cursor-pointer select-none border-0 transition-all duration-fast ease-out touch-manipulation';
 
@@ -31,8 +20,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         'bg-transparent border-2 border-primary text-primary px-6 py-3 rounded-md hover:bg-primary hover:text-white dark:border-slate-300 dark:text-slate-300 dark:hover:bg-slate-300 dark:hover:text-primary',
       ghost:
         'bg-transparent text-text-body px-6 py-3 rounded-md hover:bg-primary/6 dark:text-slate-300 dark:hover:bg-slate-300/10',
-      danger:
-        'bg-danger text-white px-7 py-3.5 rounded-md shadow-lg hover:bg-red-600 hover:shadow-xl active:shadow-lg',
+      danger: 'bg-danger text-white px-7 py-3.5 rounded-md shadow-lg hover:bg-red-600 hover:shadow-xl active:shadow-lg',
     };
 
     const sizeClasses = {
@@ -53,20 +41,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           sizeClasses[size],
           (disabled ?? loading) && disabledClasses,
           loading && loadingClasses,
-          className
+          className,
         )}
         disabled={disabled ?? loading}
         {...props}
       >
         {loading && (
-          <div className='absolute inset-0 flex items-center justify-center'>
-            <div className='w-5 h-5 border-2 border-transparent border-t-current rounded-full animate-spin' />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-5 h-5 border-2 border-transparent border-t-current rounded-full animate-spin" />
           </div>
         )}
         {children}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = 'Button';

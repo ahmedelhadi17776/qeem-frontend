@@ -14,13 +14,11 @@ export class ThemeManager {
   private constructor() {
     if (typeof window !== 'undefined') {
       // Listen for system theme changes
-      window
-        .matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change', () => {
-          if (this.getStoredTheme() === 'system') {
-            this.notifyListeners('system');
-          }
-        });
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        if (this.getStoredTheme() === 'system') {
+          this.notifyListeners('system');
+        }
+      });
     }
   }
 
@@ -59,9 +57,7 @@ export class ThemeManager {
     const theme = this.getTheme();
 
     if (theme === 'system') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light';
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
 
     return theme;
@@ -74,11 +70,7 @@ export class ThemeManager {
     if (typeof window === 'undefined') return;
 
     const effectiveTheme =
-      theme === 'system'
-        ? window.matchMedia('(prefers-color-scheme: dark)').matches
-          ? 'dark'
-          : 'light'
-        : theme;
+      theme === 'system' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme;
 
     document.documentElement.setAttribute('data-theme', effectiveTheme);
   }
@@ -162,19 +154,14 @@ export function useTheme() {
     setTheme: setThemeAndStore,
     toggleTheme,
     mounted,
-    effectiveTheme: mounted
-      ? ThemeManager.getInstance().getEffectiveTheme()
-      : 'light',
+    effectiveTheme: mounted ? ThemeManager.getInstance().getEffectiveTheme() : 'light',
   };
 }
 
 /**
  * Utility function to get theme-aware class names
  */
-export function getThemeClasses(
-  lightClasses: string,
-  darkClasses: string
-): string {
+export function getThemeClasses(lightClasses: string, darkClasses: string): string {
   return `${lightClasses} [data-theme="dark"]:${darkClasses}`;
 }
 

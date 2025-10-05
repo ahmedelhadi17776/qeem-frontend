@@ -21,7 +21,7 @@ export function responsive(
     md?: string;
     lg?: string;
     xl?: string;
-  } = {}
+  } = {},
 ) {
   const classes = [base];
 
@@ -40,11 +40,7 @@ export function responsive(
  * @param selected - Selected variant
  * @returns Combined class string
  */
-export function variant<T extends string>(
-  base: string,
-  variants: Record<T, string>,
-  selected?: T
-) {
+export function variant<T extends string>(base: string, variants: Record<T, string>, selected?: T) {
   if (!selected || !variants[selected]) {
     return base;
   }
@@ -59,11 +55,7 @@ export function variant<T extends string>(
  * @param selected - Selected size
  * @returns Combined class string
  */
-export function size<T extends string>(
-  base: string,
-  sizes: Record<T, string>,
-  selected?: T
-) {
+export function size<T extends string>(base: string, sizes: Record<T, string>, selected?: T) {
   if (!selected || !sizes[selected]) {
     return base;
   }
@@ -78,11 +70,7 @@ export function size<T extends string>(
  * @param locale - Locale (default: 'en-EG')
  * @returns Formatted currency string
  */
-export function formatCurrency(
-  amount: number,
-  currency: string = 'EGP',
-  locale: string = 'en-EG'
-): string {
+export function formatCurrency(amount: number, currency: string = 'EGP', locale: string = 'en-EG'): string {
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,
@@ -107,7 +95,7 @@ export function formatNumber(number: number, locale: string = 'en-EG'): string {
  */
 export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
-  wait: number
+  wait: number,
 ): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout;
 
@@ -125,7 +113,7 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
  */
 export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
-  limit: number
+  limit: number,
 ): (...args: Parameters<T>) => void {
   let inThrottle: boolean;
 
@@ -144,8 +132,7 @@ export function throttle<T extends (...args: unknown[]) => unknown>(
  * @returns Random ID string
  */
 export function generateId(length: number = 8): string {
-  const chars =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';
 
   for (let i = 0; i < length; i++) {
