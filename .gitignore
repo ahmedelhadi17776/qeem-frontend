@@ -7,7 +7,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Package manager files
-package-lock.json
+# package-lock.json  # Keep package-lock.json for reproducible builds
 yarn.lock
 pnpm-lock.yaml
 .pnp.*
