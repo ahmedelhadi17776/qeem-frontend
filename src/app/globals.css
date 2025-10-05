@@ -1,4 +1,218 @@
-/* Import design system styles */
-@import '../styles/tokens.css';
-@import '../styles/base.css';
-@import '../styles/components.css';
+/* Google Fonts - must come first */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Modern CSS Reset with Performance Focus */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: #f8fafc;
+    color: #334155;
+    line-height: 1.5;
+    transition: background-color 250ms ease-in-out, color 250ms ease-in-out;
+    /* Performance optimizations */
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+  }
+
+  /* Dark mode body styles */
+  [data-theme="dark"] body {
+    background-color: #0f172a;
+    color: #cbd5e1;
+  }
+
+  /* Optimize images and media */
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Typography base styles */
+  h1, h2, h3, h4, h5, h6 {
+    color: #0f172a;
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  [data-theme="dark"] h1,
+  [data-theme="dark"] h2,
+  [data-theme="dark"] h3,
+  [data-theme="dark"] h4,
+  [data-theme="dark"] h5,
+  [data-theme="dark"] h6 {
+    color: #f1f5f9;
+  }
+
+  p {
+    color: #475569;
+    line-height: 1.5;
+  }
+
+  [data-theme="dark"] p {
+    color: #94a3b8;
+  }
+
+  a {
+    color: #22c55e;
+    text-decoration: none;
+    transition: color 150ms ease-out;
+  }
+
+  a:hover {
+    color: #16a34a;
+  }
+
+  /* Focus styles for accessibility */
+  *:focus-visible {
+    outline: 3px solid #22c55e;
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+
+  /* Screen reader only class */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+@layer components {
+  /* Custom component classes can be added here */
+  
+  /* Form grid layout */
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* Form group spacing */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  /* Space between elements */
+  .space-y-6 > * + * {
+    margin-top: 1.5rem;
+  }
+
+  /* Full width utility */
+  .w-full { 
+    width: 100%; 
+  }
+
+  /* Error message styling */
+  .error-message {
+    padding: 0.5rem 1rem;
+    background-color: rgb(239 68 68 / 0.1);
+    border: 1px solid rgb(239 68 68);
+    border-radius: 0.75rem;
+    color: rgb(239 68 68);
+    font-size: 0.875rem;
+  }
+
+  /* Results section */
+  .results-section {
+    margin-top: 3rem;
+  }
+
+  .results-section h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  /* Rate cards grid */
+  .rate-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .rate-cards .rate-card h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .rate-cards .rate-card .rate-amount {
+    font-size: 2rem;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    color: #22c55e;
+  }
+
+  .rate-cards .rate-card p {
+    color: #64748b;
+    font-size: 0.875rem;
+  }
+
+  /* Rate card tier variants */
+  .rate-card.tier-minimum {
+    border-left: 4px solid #ef4444;
+    padding-left: 1rem;
+  }
+
+  .rate-card.tier-competitive {
+    border-left: 4px solid #22c55e;
+    box-shadow: 0 4px 12px rgb(34 197 94 / 0.12);
+    padding-left: 1rem;
+  }
+
+  .rate-card.tier-premium {
+    border-left: 4px solid #3b82f6;
+    background: linear-gradient(135deg, 
+      #ffffff 0%, 
+      rgb(59 130 246 / 0.05) 100%
+    );
+    padding-left: 1rem;
+  }
+}

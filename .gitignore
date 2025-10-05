@@ -159,3 +159,27 @@ lib-cov
 
 # TypeScript build info
 tsconfig.tsbuildinfo
+
+# Tailwind CSS
+.tailwindcss-cache/
+
+# PostCSS
+.postcssrc
+postcss.config.js.bak
+
+# IDE and editor files
+*.sublime-project
+*.sublime-workspace
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

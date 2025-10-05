@@ -40,32 +40,69 @@ export function Sidebar({ className }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className={clsx('sidebar', className)}>
-      <nav className='sidebar-nav'>
-        <div className='sidebar-header'>
-          <h2 className='sidebar-title'>Navigation</h2>
-        </div>
+    <>
+      {/* Desktop Sidebar */}
+      <aside
+        className={clsx(
+          'hidden lg:block bg-surface border-r border-border p-6 overflow-y-auto',
+          'lg:fixed lg:left-0 lg:top-16 lg:bottom-0 lg:w-70',
+          className
+        )}
+      >
+        <nav className='h-full'>
+          <div className='mb-6'>
+            <h2 className='text-lg font-bold text-text-main'>Navigation</h2>
+          </div>
 
-        <ul className='sidebar-menu'>
+          <ul className='space-y-1'>
+            {navigationItems.map(item => {
+              const isActive = pathname === item.href;
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={clsx(
+                      'flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium transition-all duration-fast',
+                      'hover:bg-accent/10 hover:text-accent',
+                      isActive
+                        ? 'bg-accent/10 text-accent'
+                        : 'text-text-body hover:text-text-main'
+                    )}
+                  >
+                    <span className='text-lg'>{item.icon}</span>
+                    <span>{item.name}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </aside>
+
+      {/* Mobile Bottom Navigation */}
+      <nav className='lg:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-border z-sticky'>
+        <div className='grid grid-cols-5 h-18 px-2 py-2'>
           {navigationItems.map(item => {
             const isActive = pathname === item.href;
             return (
-              <li key={item.href} className='sidebar-item'>
-                <Link
-                  href={item.href}
-                  className={clsx(
-                    'sidebar-link',
-                    isActive && 'sidebar-link-active'
-                  )}
-                >
-                  <span className='sidebar-icon'>{item.icon}</span>
-                  <span className='sidebar-text'>{item.name}</span>
-                </Link>
-              </li>
+              <Link
+                key={item.href}
+                href={item.href}
+                className={clsx(
+                  'flex flex-col items-center justify-center gap-1 px-2 py-2 rounded-md transition-all duration-fast',
+                  'hover:bg-accent/10',
+                  isActive
+                    ? 'text-accent'
+                    : 'text-text-body hover:text-text-main'
+                )}
+              >
+                <span className='text-xl'>{item.icon}</span>
+                <span className='text-xs font-medium'>{item.name}</span>
+              </Link>
             );
           })}
-        </ul>
+        </div>
       </nav>
-    </aside>
+    </>
   );
 }

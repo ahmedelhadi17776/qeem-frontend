@@ -58,24 +58,29 @@ export function RateCalculatorForm() {
   };
 
   return (
-    <div className='container'>
+    <div className='max-w-4xl mx-auto'>
       <Card>
         <CardHeader>
-          <h1 className='card-title'>Rate Calculator</h1>
-          <p>
+          <h1 className='text-3xl font-extrabold text-text-main mb-2'>
+            Rate Calculator
+          </h1>
+          <p className='text-text-body'>
             Calculate your freelance rate based on your skills and experience.
           </p>
         </CardHeader>
         <CardBody>
           <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
-            <div className='form-grid'>
-              <div className='form-group'>
-                <label htmlFor='project_type' className='input-label'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+              <div className='flex flex-col gap-2'>
+                <label
+                  htmlFor='project_type'
+                  className='text-sm font-semibold text-text-main'
+                >
                   Project Type
                 </label>
                 <select
                   id='project_type'
-                  className='input-field'
+                  className='w-full bg-surface border-2 border-border rounded-md px-4 py-3.5 text-base text-text-main font-inherit transition-all duration-DEFAULT ease-out placeholder:text-text-muted placeholder:opacity-70 focus:border-accent focus:ring-4 focus:ring-accent/10 focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-bg'
                   {...register('project_type')}
                 >
                   <option value=''>Select project type</option>
@@ -86,19 +91,22 @@ export function RateCalculatorForm() {
                   ))}
                 </select>
                 {errors.project_type && (
-                  <span className='input-error'>
+                  <span className='block mt-1 text-sm text-danger'>
                     {errors.project_type.message}
                   </span>
                 )}
               </div>
 
-              <div className='form-group'>
-                <label htmlFor='project_complexity' className='input-label'>
+              <div className='flex flex-col gap-2'>
+                <label
+                  htmlFor='project_complexity'
+                  className='text-sm font-semibold text-text-main'
+                >
                   Project Complexity
                 </label>
                 <select
                   id='project_complexity'
-                  className='input-field'
+                  className='w-full bg-surface border-2 border-border rounded-md px-4 py-3.5 text-base text-text-main font-inherit transition-all duration-DEFAULT ease-out placeholder:text-text-muted placeholder:opacity-70 focus:border-accent focus:ring-4 focus:ring-accent/10 focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-bg'
                   {...register('project_complexity')}
                 >
                   <option value=''>Select complexity</option>
@@ -109,7 +117,7 @@ export function RateCalculatorForm() {
                   ))}
                 </select>
                 {errors.project_complexity && (
-                  <span className='input-error'>
+                  <span className='block mt-1 text-sm text-danger'>
                     {errors.project_complexity.message}
                   </span>
                 )}
@@ -144,8 +152,8 @@ export function RateCalculatorForm() {
             </div>
 
             {error && (
-              <div className='error-message'>
-                <p>{error}</p>
+              <div className='p-3 bg-danger/10 border border-danger rounded-md'>
+                <p className='text-danger text-sm'>{error}</p>
               </div>
             )}
 
@@ -155,29 +163,43 @@ export function RateCalculatorForm() {
           </form>
 
           {results && (
-            <div className='results-section'>
-              <h2>Your Rate Recommendations</h2>
-              <div className='rate-cards'>
-                <div className='rate-card tier-minimum'>
-                  <h3>Minimum Rate</h3>
-                  <div className='rate-amount'>
+            <div className='mt-8'>
+              <h2 className='text-2xl font-bold text-text-main mb-6'>
+                Your Rate Recommendations
+              </h2>
+              <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                <div className='bg-surface border border-border rounded-lg p-6 rate-card tier-minimum'>
+                  <h3 className='text-lg font-semibold text-text-main mb-2'>
+                    Minimum Rate
+                  </h3>
+                  <div className='text-3xl font-extrabold font-mono text-accent mb-2'>
                     {results.minimum_rate} {results.currency}
                   </div>
-                  <p>Basic rate for this project</p>
+                  <p className='text-text-muted text-sm'>
+                    Basic rate for this project
+                  </p>
                 </div>
-                <div className='rate-card tier-competitive'>
-                  <h3>Competitive Rate</h3>
-                  <div className='rate-amount'>
+                <div className='bg-surface border border-border rounded-lg p-6 rate-card tier-competitive'>
+                  <h3 className='text-lg font-semibold text-text-main mb-2'>
+                    Competitive Rate
+                  </h3>
+                  <div className='text-3xl font-extrabold font-mono text-accent mb-2'>
                     {results.competitive_rate} {results.currency}
                   </div>
-                  <p>Recommended rate for market competitiveness</p>
+                  <p className='text-text-muted text-sm'>
+                    Recommended rate for market competitiveness
+                  </p>
                 </div>
-                <div className='rate-card tier-premium'>
-                  <h3>Premium Rate</h3>
-                  <div className='rate-amount'>
+                <div className='bg-surface border border-border rounded-lg p-6 rate-card tier-premium'>
+                  <h3 className='text-lg font-semibold text-text-main mb-2'>
+                    Premium Rate
+                  </h3>
+                  <div className='text-3xl font-extrabold font-mono text-accent mb-2'>
                     {results.premium_rate} {results.currency}
                   </div>
-                  <p>Premium rate for high-value clients</p>
+                  <p className='text-text-muted text-sm'>
+                    Premium rate for high-value clients
+                  </p>
                 </div>
               </div>
             </div>

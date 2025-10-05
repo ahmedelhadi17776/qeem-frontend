@@ -11,3 +11,4 @@ export {
   type CardBodyProps,
   type CardFooterProps,
 } from './Card';
+export { ThemeToggle } from './ThemeToggle';

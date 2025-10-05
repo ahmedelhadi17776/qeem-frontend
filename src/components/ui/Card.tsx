@@ -12,17 +12,20 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     { variant = 'default', padding = 'md', className, children, ...props },
     ref
   ) => {
-    const baseClasses = 'card';
+    const baseClasses =
+      'bg-surface rounded-lg transition-all duration-DEFAULT ease-out';
+
     const variantClasses = {
-      default: 'card-default',
-      elevated: 'card-elevated',
-      outlined: 'card-outlined',
+      default: 'border border-border',
+      elevated: 'shadow-lg',
+      outlined: 'border-2 border-border',
     };
+
     const paddingClasses = {
-      none: 'card-padding-none',
-      sm: 'card-padding-sm',
-      md: 'card-padding-md',
-      lg: 'card-padding-lg',
+      none: 'p-0',
+      sm: 'p-2',
+      md: 'p-4',
+      lg: 'p-6',
     };
 
     return (
@@ -52,7 +55,11 @@ export interface CardHeaderProps extends HTMLAttributes<HTMLDivElement> {
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ className, children, ...props }, ref) => {
     return (
-      <div ref={ref} className={clsx('card-header', className)} {...props}>
+      <div
+        ref={ref}
+        className={clsx('p-6 border-b border-border', className)}
+        {...props}
+      >
         {children}
       </div>
     );
@@ -68,7 +75,7 @@ export interface CardBodyProps extends HTMLAttributes<HTMLDivElement> {
 export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
   ({ className, children, ...props }, ref) => {
     return (
-      <div ref={ref} className={clsx('card-body', className)} {...props}>
+      <div ref={ref} className={clsx('p-6', className)} {...props}>
         {children}
       </div>
     );
@@ -84,7 +91,11 @@ export interface CardFooterProps extends HTMLAttributes<HTMLDivElement> {
 export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
   ({ className, children, ...props }, ref) => {
     return (
-      <div ref={ref} className={clsx('card-footer', className)} {...props}>
+      <div
+        ref={ref}
+        className={clsx('p-6 border-t border-border bg-bg/30', className)}
+        {...props}
+      >
         {children}
       </div>
     );

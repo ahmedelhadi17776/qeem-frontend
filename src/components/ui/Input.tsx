@@ -23,35 +23,50 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const hasRightIcon = Boolean(rightIcon);
 
     return (
-      <div className='input-wrapper'>
+      <div className='w-full'>
         {label && (
-          <label htmlFor={inputId} className='input-label'>
+          <label
+            htmlFor={inputId}
+            className='block text-sm font-semibold text-text-main mb-2'
+          >
             {label}
           </label>
         )}
-        <div className='input-container'>
+        <div className='relative'>
           {leftIcon && (
-            <div className='input-icon input-icon-left'>{leftIcon}</div>
+            <div className='absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-muted pointer-events-none'>
+              {leftIcon}
+            </div>
           )}
           <input
             ref={ref}
             id={inputId}
             className={clsx(
-              'input-field',
-              hasError && 'is-invalid',
-              hasLeftIcon && 'input-with-icon-left',
-              hasRightIcon && 'input-with-icon-right',
+              'w-full bg-surface border-2 border-border rounded-md px-4 py-3.5 text-base text-text-main font-inherit transition-all duration-DEFAULT ease-out',
+              'placeholder:text-text-muted placeholder:opacity-70',
+              'focus:border-accent focus:ring-4 focus:ring-accent/10 focus:outline-none',
+              'disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-bg',
+              hasError &&
+                'border-danger focus:border-danger focus:ring-danger/10',
+              hasLeftIcon && 'pl-12',
+              hasRightIcon && 'pr-12',
               className
             )}
             {...props}
           />
           {rightIcon && (
-            <div className='input-icon input-icon-right'>{rightIcon}</div>
+            <div className='absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-muted pointer-events-none'>
+              {rightIcon}
+            </div>
           )}
         </div>
-        {error && <span className='input-error'>{error}</span>}
+        {error && (
+          <span className='block mt-1 text-sm text-danger'>{error}</span>
+        )}
         {helperText && !error && (
-          <span className='input-helper'>{helperText}</span>
+          <span className='block mt-1 text-sm text-text-muted'>
+            {helperText}
+          </span>
         )}
       </div>
     );

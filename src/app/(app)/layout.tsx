@@ -19,10 +19,14 @@ const Sidebar = dynamic(
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (
-    <div className='app-layout'>
+    <div className='min-h-screen bg-bg'>
       <Header />
-      <Sidebar />
-      <main className='main-content'>{children}</main>
+      <div className='lg:pl-70'>
+        <Sidebar />
+        <main className='px-4 lg:px-8 py-8 pb-20 lg:pb-8 max-w-7xl mx-auto'>
+          {children}
+        </main>
+      </div>
     </div>
   );
 }
