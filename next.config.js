@@ -4,19 +4,22 @@ const nextConfig = {
   
   // Performance optimizations (Turbopack compatible)
   experimental: {
-    optimizeCss: true,
-    optimizePackageImports: ['clsx', '@tanstack/react-query'],
+    optimizePackageImports: [
+      'clsx', 
+      'react-hook-form',
+      'zod'
+    ],
   },
   
   images: {
     domains: ['localhost', 'api.qeem.com'],
   },
+  
+  // Simplified headers for dev performance
   async headers() {
-    // Simplified headers for better dev performance
     const isDev = process.env.NODE_ENV === 'development';
     
     if (!isDev) {
-      // Only add CSP in production to reduce dev overhead
       const prodCsp = [
         "default-src 'self'",
         "script-src 'self' 'unsafe-eval'",
@@ -42,6 +45,27 @@ const nextConfig = {
     }
     
     return [];
+  },
+  
+  // Webpack config for fallback (when not using Turbopack)
+  webpack: (config, { dev, isServer }) => {
+    if (dev) {
+      // Reduce file watching overhead
+      config.watchOptions = {
+        ...config.watchOptions,
+        ignored: [
+          '**/node_modules/**',
+          '**/.git/**',
+          '**/.next/**',
+          '**/coverage/**',
+          '**/dist/**',
+          '**/.vscode/**',
+          '**/.idea/**',
+        ],
+      };
+    }
+    
+    return config;
   },
 };
 

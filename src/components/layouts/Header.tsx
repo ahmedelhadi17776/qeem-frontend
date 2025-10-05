@@ -1,5 +1,11 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui';
+import dynamic from 'next/dynamic';
+
+// Lazy load Button component for better performance
+const Button = dynamic(
+  () => import('@/components/ui').then(mod => ({ default: mod.Button })),
+  { ssr: true }
+);
 
 interface HeaderProps {
   user?: {

@@ -1,5 +1,21 @@
 import Link from 'next/link';
-import { Button, Card, CardBody } from '@/components/ui';
+import dynamic from 'next/dynamic';
+
+// Lazy load UI components for better performance
+const Button = dynamic(
+  () => import('@/components/ui').then(mod => ({ default: mod.Button })),
+  { ssr: true }
+);
+
+const Card = dynamic(
+  () => import('@/components/ui').then(mod => ({ default: mod.Card })),
+  { ssr: true }
+);
+
+const CardBody = dynamic(
+  () => import('@/components/ui').then(mod => ({ default: mod.CardBody })),
+  { ssr: true }
+);
 
 export default function Home() {
   return (

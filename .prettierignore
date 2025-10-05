@@ -1,37 +1,8 @@
-# Dependencies
-node_modules/
-
-# Production builds
-.next/
-out/
-dist/
-build/
-
-# Environment files
-.env*
-
-# Logs
-*.log
-
-# Coverage
-coverage/
-
-# Cache
-.cache/
-.parcel-cache/
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# IDE files
-.vscode/
-.idea/
-
-# Package manager files
+node_modules
+.next
+out
+dist
+coverage
+.turbo
+*.config.js
 package-lock.json
-yarn.lock
-pnpm-lock.yaml
-
-# Generated files
-*.tsbuildinfo
