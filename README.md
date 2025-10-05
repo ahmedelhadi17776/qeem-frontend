@@ -402,13 +402,3 @@ Before submitting a PR, ensure:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
-
-For support, email support@qeem.com or join our Discord community.
-
-## 🙏 Acknowledgments
-
-- Next.js team for the amazing framework
-- React team for the excellent library
-- TypeScript team for the type system
-- All contributors who help make this project better
