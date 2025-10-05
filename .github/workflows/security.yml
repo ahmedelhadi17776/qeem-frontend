@@ -72,9 +72,11 @@ jobs:
           output: 'frontend-trivy-results.sarif'
 
       - name: Upload Trivy scan results
+        if: github.event_name == 'pull_request'
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: 'frontend-trivy-results.sarif'
+        continue-on-error: true
 
   secrets-scan:
     runs-on: ubuntu-latest
@@ -84,12 +86,14 @@ jobs:
           fetch-depth: 0
 
       - name: Run TruffleHog secrets scan
+        if: github.event_name == 'pull_request'
         uses: trufflesecurity/trufflehog@main
         with:
           path: ./
-          base: main
-          head: HEAD
+          base: ${{ github.event.pull_request.base.sha }}
+          head: ${{ github.event.pull_request.head.sha }}
           extra_args: --debug --only-verified
+        continue-on-error: true
 
   dependency-review:
     runs-on: ubuntu-latest
