@@ -13,12 +13,12 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     ref
   ) => {
     const baseClasses =
-      'bg-surface rounded-lg transition-all duration-DEFAULT ease-out';
+      'bg-surface dark:bg-slate-800 rounded-lg transition-all duration-DEFAULT ease-out';
 
     const variantClasses = {
-      default: 'border border-border',
+      default: 'border border-border dark:border-slate-600',
       elevated: 'shadow-lg',
-      outlined: 'border-2 border-border',
+      outlined: 'border-2 border-border dark:border-slate-600',
     };
 
     const paddingClasses = {
@@ -57,7 +57,10 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
     return (
       <div
         ref={ref}
-        className={clsx('p-6 border-b border-border', className)}
+        className={clsx(
+          'p-6 border-b border-border dark:border-slate-600',
+          className
+        )}
         {...props}
       >
         {children}
@@ -93,7 +96,10 @@ export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
     return (
       <div
         ref={ref}
-        className={clsx('p-6 border-t border-border bg-bg/30', className)}
+        className={clsx(
+          'p-6 border-t border-border dark:border-slate-600 bg-bg/30 dark:bg-slate-900/30',
+          className
+        )}
         {...props}
       >
         {children}

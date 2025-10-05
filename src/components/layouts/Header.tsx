@@ -23,7 +23,7 @@ interface HeaderProps {
 
 export function Header({ user, onLogout }: HeaderProps) {
   return (
-    <header className='bg-surface border-b border-border px-4 lg:px-8'>
+    <header className='bg-surface dark:bg-slate-800 border-b border-border dark:border-slate-600 px-4 lg:px-8'>
       <div className='flex items-center justify-between h-16 max-w-7xl mx-auto'>
         <div className='flex items-center'>
           <Link href='/' className='flex items-center space-x-3'>
@@ -54,7 +54,7 @@ export function Header({ user, onLogout }: HeaderProps) {
           <ThemeToggle />
           {user ? (
             <div className='flex items-center space-x-4'>
-              <span className='text-sm font-medium text-text-main hidden sm:block'>
+              <span className='text-sm font-medium text-text-main dark:text-slate-100 hidden sm:block'>
                 {user.name}
               </span>
               <Button variant='ghost' size='sm' onClick={onLogout}>

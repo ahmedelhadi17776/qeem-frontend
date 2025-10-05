@@ -28,9 +28,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       primary:
         'bg-gradient-to-b from-accent to-accent-dark text-white px-7 py-3.5 rounded-md shadow-lg shadow-accent/24 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent/32 active:translate-y-0 active:shadow-lg active:shadow-accent/24',
       secondary:
-        'bg-transparent border-2 border-primary text-primary px-6 py-3 rounded-md hover:bg-primary hover:text-white dark:border-text-main dark:text-text-main dark:hover:bg-text-main dark:hover:text-primary',
+        'bg-transparent border-2 border-primary text-primary px-6 py-3 rounded-md hover:bg-primary hover:text-white dark:border-slate-300 dark:text-slate-300 dark:hover:bg-slate-300 dark:hover:text-primary',
       ghost:
-        'bg-transparent text-text-body px-6 py-3 rounded-md hover:bg-primary/6 dark:hover:bg-text-main/6',
+        'bg-transparent text-text-body px-6 py-3 rounded-md hover:bg-primary/6 dark:text-slate-300 dark:hover:bg-slate-300/10',
       danger:
         'bg-danger text-white px-7 py-3.5 rounded-md shadow-lg hover:bg-red-600 hover:shadow-xl active:shadow-lg',
     };

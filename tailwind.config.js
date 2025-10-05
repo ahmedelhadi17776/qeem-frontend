@@ -23,32 +23,14 @@ module.exports = {
         warning: '#F59E0B',
         info: '#3B82F6',
         success: '#22C55E',
-        // Text Colors
-        'text-main': {
-          DEFAULT: '#1A2B48',
-          dark: '#F8FAFC',
-        },
-        'text-body': {
-          DEFAULT: '#334155',
-          dark: '#94A3B8',
-        },
-        'text-muted': {
-          DEFAULT: '#64748B',
-          dark: '#64748B',
-        },
-        // Background Colors
-        bg: {
-          DEFAULT: '#F1F5F9',
-          dark: '#0F172A',
-        },
-        surface: {
-          DEFAULT: '#FFFFFF',
-          dark: '#1E293B',
-        },
-        border: {
-          DEFAULT: '#E2E8F0',
-          dark: '#334155',
-        },
+        // Text Colors (light mode values)
+        'text-main': '#1A2B48',
+        'text-body': '#334155',
+        'text-muted': '#64748B',
+        // Background Colors (light mode values)
+        bg: '#F1F5F9',
+        surface: '#FFFFFF',
+        border: '#E2E8F0',
       },
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],

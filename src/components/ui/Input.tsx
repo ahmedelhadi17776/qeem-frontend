@@ -27,14 +27,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className='block text-sm font-semibold text-text-main mb-2'
+            className='block text-sm font-semibold text-text-main dark:text-slate-100 mb-2'
           >
             {label}
           </label>
         )}
         <div className='relative'>
           {leftIcon && (
-            <div className='absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-muted pointer-events-none'>
+            <div className='absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-muted dark:text-slate-400 pointer-events-none'>
               {leftIcon}
             </div>
           )}
@@ -42,10 +42,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={inputId}
             className={clsx(
-              'w-full bg-surface border-2 border-border rounded-md px-4 py-3.5 text-base text-text-main font-inherit transition-all duration-DEFAULT ease-out',
-              'placeholder:text-text-muted placeholder:opacity-70',
+              'w-full bg-surface dark:bg-slate-800 border-2 border-border dark:border-slate-600 rounded-md px-4 py-3.5 text-base text-text-main dark:text-slate-100 font-inherit transition-all duration-DEFAULT ease-out',
+              'placeholder:text-text-muted dark:placeholder:text-slate-400 placeholder:opacity-70',
               'focus:border-accent focus:ring-4 focus:ring-accent/10 focus:outline-none',
-              'disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-bg',
+              'disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-bg dark:disabled:bg-slate-900',
               hasError &&
                 'border-danger focus:border-danger focus:ring-danger/10',
               hasLeftIcon && 'pl-12',
@@ -55,7 +55,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {rightIcon && (
-            <div className='absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-muted pointer-events-none'>
+            <div className='absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-muted dark:text-slate-400 pointer-events-none'>
               {rightIcon}
             </div>
           )}
@@ -64,7 +64,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <span className='block mt-1 text-sm text-danger'>{error}</span>
         )}
         {helperText && !error && (
-          <span className='block mt-1 text-sm text-text-muted'>
+          <span className='block mt-1 text-sm text-text-muted dark:text-slate-400'>
             {helperText}
           </span>
         )}

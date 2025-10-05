@@ -19,7 +19,7 @@ const Sidebar = dynamic(
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (
-    <div className='min-h-screen bg-bg'>
+    <div className='min-h-screen bg-bg dark:bg-slate-900'>
       <Header />
       <div className='lg:pl-70'>
         <Sidebar />

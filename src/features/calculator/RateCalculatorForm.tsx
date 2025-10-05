@@ -61,10 +61,10 @@ export function RateCalculatorForm() {
     <div className='max-w-4xl mx-auto'>
       <Card>
         <CardHeader>
-          <h1 className='text-3xl font-extrabold text-text-main mb-2'>
+          <h1 className='text-3xl font-extrabold text-text-main dark:text-slate-100 mb-2'>
             Rate Calculator
           </h1>
-          <p className='text-text-body'>
+          <p className='text-text-body dark:text-slate-300'>
             Calculate your freelance rate based on your skills and experience.
           </p>
         </CardHeader>
@@ -74,13 +74,13 @@ export function RateCalculatorForm() {
               <div className='flex flex-col gap-2'>
                 <label
                   htmlFor='project_type'
-                  className='text-sm font-semibold text-text-main'
+                  className='text-sm font-semibold text-text-main dark:text-slate-100'
                 >
                   Project Type
                 </label>
                 <select
                   id='project_type'
-                  className='w-full bg-surface border-2 border-border rounded-md px-4 py-3.5 text-base text-text-main font-inherit transition-all duration-DEFAULT ease-out placeholder:text-text-muted placeholder:opacity-70 focus:border-accent focus:ring-4 focus:ring-accent/10 focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-bg'
+                  className='w-full bg-surface dark:bg-slate-800 border-2 border-border dark:border-slate-600 rounded-md px-4 py-3.5 text-base text-text-main dark:text-slate-100 font-inherit transition-all duration-DEFAULT ease-out placeholder:text-text-muted dark:placeholder:text-slate-400 placeholder:opacity-70 focus:border-accent focus:ring-4 focus:ring-accent/10 focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-bg dark:disabled:bg-slate-900'
                   {...register('project_type')}
                 >
                   <option value=''>Select project type</option>
@@ -100,13 +100,13 @@ export function RateCalculatorForm() {
               <div className='flex flex-col gap-2'>
                 <label
                   htmlFor='project_complexity'
-                  className='text-sm font-semibold text-text-main'
+                  className='text-sm font-semibold text-text-main dark:text-slate-100'
                 >
                   Project Complexity
                 </label>
                 <select
                   id='project_complexity'
-                  className='w-full bg-surface border-2 border-border rounded-md px-4 py-3.5 text-base text-text-main font-inherit transition-all duration-DEFAULT ease-out placeholder:text-text-muted placeholder:opacity-70 focus:border-accent focus:ring-4 focus:ring-accent/10 focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-bg'
+                  className='w-full bg-surface dark:bg-slate-800 border-2 border-border dark:border-slate-600 rounded-md px-4 py-3.5 text-base text-text-main dark:text-slate-100 font-inherit transition-all duration-DEFAULT ease-out placeholder:text-text-muted dark:placeholder:text-slate-400 placeholder:opacity-70 focus:border-accent focus:ring-4 focus:ring-accent/10 focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-bg dark:disabled:bg-slate-900'
                   {...register('project_complexity')}
                 >
                   <option value=''>Select complexity</option>
@@ -164,40 +164,40 @@ export function RateCalculatorForm() {
 
           {results && (
             <div className='mt-8'>
-              <h2 className='text-2xl font-bold text-text-main mb-6'>
+              <h2 className='text-2xl font-bold text-text-main dark:text-slate-100 mb-6'>
                 Your Rate Recommendations
               </h2>
               <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                <div className='bg-surface border border-border rounded-lg p-6 rate-card tier-minimum'>
-                  <h3 className='text-lg font-semibold text-text-main mb-2'>
+                <div className='bg-surface dark:bg-slate-800 border border-border dark:border-slate-600 rounded-lg p-6 rate-card tier-minimum'>
+                  <h3 className='text-lg font-semibold text-text-main dark:text-slate-100 mb-2'>
                     Minimum Rate
                   </h3>
                   <div className='text-3xl font-extrabold font-mono text-accent mb-2'>
                     {results.minimum_rate} {results.currency}
                   </div>
-                  <p className='text-text-muted text-sm'>
+                  <p className='text-text-muted dark:text-slate-400 text-sm'>
                     Basic rate for this project
                   </p>
                 </div>
-                <div className='bg-surface border border-border rounded-lg p-6 rate-card tier-competitive'>
-                  <h3 className='text-lg font-semibold text-text-main mb-2'>
+                <div className='bg-surface dark:bg-slate-800 border border-border dark:border-slate-600 rounded-lg p-6 rate-card tier-competitive'>
+                  <h3 className='text-lg font-semibold text-text-main dark:text-slate-100 mb-2'>
                     Competitive Rate
                   </h3>
                   <div className='text-3xl font-extrabold font-mono text-accent mb-2'>
                     {results.competitive_rate} {results.currency}
                   </div>
-                  <p className='text-text-muted text-sm'>
+                  <p className='text-text-muted dark:text-slate-400 text-sm'>
                     Recommended rate for market competitiveness
                   </p>
                 </div>
-                <div className='bg-surface border border-border rounded-lg p-6 rate-card tier-premium'>
-                  <h3 className='text-lg font-semibold text-text-main mb-2'>
+                <div className='bg-surface dark:bg-slate-800 border border-border dark:border-slate-600 rounded-lg p-6 rate-card tier-premium'>
+                  <h3 className='text-lg font-semibold text-text-main dark:text-slate-100 mb-2'>
                     Premium Rate
                   </h3>
                   <div className='text-3xl font-extrabold font-mono text-accent mb-2'>
                     {results.premium_rate} {results.currency}
                   </div>
-                  <p className='text-text-muted text-sm'>
+                  <p className='text-text-muted dark:text-slate-400 text-sm'>
                     Premium rate for high-value clients
                   </p>
                 </div>

@@ -5,18 +5,20 @@ Egypt's first AI-powered freelance rate calculator frontend built with Next.js 1
 ## 🚀 Features
 
 - **Modern Stack**: Next.js 15 with App Router, TypeScript, and React 18
-- **Custom Design System**: CSS custom properties with dark mode support
+- **Tailwind CSS**: Complete migration to Tailwind CSS v3.4.0 with custom brand configuration
+- **Design System**: Utility-first approach with Qeem brand colors and typography
+- **Dark Mode**: Seamless theme switching with `[data-theme="dark"]` attribute
 - **Performance Optimized**: Core Web Vitals monitoring and optimization
 - **Accessibility First**: WCAG 2.1 AA compliant components
 - **Testing Ready**: Jest and React Testing Library configured
 - **Developer Experience**: ESLint, Prettier, and TypeScript strict mode
-- **Responsive Design**: Mobile-first approach with utility classes
+- **Responsive Design**: Mobile-first approach with Tailwind breakpoints
 
 ## 🛠️ Tech Stack
 
 - **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript (strict mode)
-- **Styling**: Custom CSS with design tokens
+- **Styling**: Tailwind CSS v3.4.0 with custom brand configuration
 - **State Management**: React Query + Zustand
 - **Forms**: React Hook Form + Zod validation
 - **Testing**: Jest + React Testing Library
@@ -44,46 +46,73 @@ src/
 │   ├── utils.ts         # Utility functions
 │   ├── theme.ts         # Theme management
 │   └── performance.ts   # Performance monitoring
-├── styles/              # CSS files
-│   ├── tokens.css       # Design tokens
-│   ├── base.css         # Base styles
-│   └── components.css   # Component styles
+├── styles/              # Tailwind CSS files
+│   └── globals.css      # Global styles with Tailwind directives
 └── types/               # TypeScript type definitions
 ```
 
 ## 🎨 Design System
 
-### Design Tokens
+### Tailwind CSS Configuration
 
-The design system uses CSS custom properties for consistent theming:
+The design system uses Tailwind CSS v3.4.0 with custom brand configuration:
+
+```javascript
+// tailwind.config.js
+module.exports = {
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
+  darkMode: ['class', '[data-theme="dark"]'],
+  theme: {
+    extend: {
+      colors: {
+        primary: '#1A2B48', // Qeem navy
+        accent: {
+          DEFAULT: '#22C55E', // Qeem green
+          dark: '#16A34A', // Qeem green dark
+        },
+        danger: '#EF4444',
+        warning: '#F59E0B',
+        info: '#3B82F6',
+        success: '#22C55E',
+        // ... more brand colors
+      },
+      fontFamily: {
+        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        arabic: ['IBM Plex Sans Arabic', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
+    },
+  },
+  plugins: [require('@tailwindcss/forms')],
+};
+```
+
+### Brand Colors
 
 ```css
-/* Colors */
---q-primary: #22c55e;
---q-accent: #3b82f6;
---q-success: #10b981;
---q-warning: #f59e0b;
---q-danger: #ef4444;
+/* Primary Colors */
+primary: #1A2B48          /* Qeem navy */
+accent: #22C55E           /* Qeem green */
+accent-dark: #16A34A      /* Qeem green dark */
 
-/* Spacing */
---space-xs: 0.25rem;
---space-sm: 0.5rem;
---space-md: 1rem;
---space-lg: 1.5rem;
---space-xl: 2rem;
---space-2xl: 3rem;
+/* Semantic Colors */
+danger: #EF4444           /* Red */
+warning: #F59E0B          /* Orange */
+info: #3B82F6            /* Blue */
+success: #22C55E         /* Green */
 
-/* Typography */
---font-size-xs: 0.75rem;
---font-size-sm: 0.875rem;
---font-size-base: 1rem;
---font-size-lg: 1.125rem;
---font-size-xl: 1.25rem;
+/* Neutral Colors */
+text-main: #1A2B48       /* Dark text */
+text-body: #334155       /* Body text */
+text-muted: #64748B      /* Muted text */
+bg: #F1F5F9             /* Background */
+surface: #FFFFFF        /* Surface */
+border: #E2E8F0         /* Border */
 ```
 
 ### Dark Mode
 
-Dark mode is supported through the `data-theme` attribute:
+Dark mode is supported through Tailwind's dark mode with `[data-theme="dark"]` attribute:
 
 ```tsx
 // Light mode (default)
@@ -93,26 +122,34 @@ Dark mode is supported through the `data-theme` attribute:
 <html data-theme="dark">
 ```
 
-### Utility Classes
+### Tailwind Utility Classes
 
-The design system includes utility classes for common patterns:
+The design system uses Tailwind's utility-first approach:
 
 ```css
 /* Layout */
-.flex, .grid, .block, .hidden
-.items-center, .justify-between
-.p-4, .m-2, .gap-3
+flex, grid, block, hidden
+items-center, justify-between
+p-4, m-2, gap-3
 
 /* Typography */
-.text-lg, .font-bold, .text-center
-.text-primary, .text-muted
+text-lg, font-bold, text-center
+text-primary, text-muted
+
+/* Brand Colors */
+text-primary, text-accent, text-main, text-body
+bg-primary, bg-accent, bg-surface
 
 /* Spacing */
-.p-0, .p-1, .p-2, .p-3, .p-4, .p-6, .p-8
-.m-0, .m-1, .m-2, .m-3, .m-4, .m-6, .m-8
+p-0, p-1, p-2, p-3, p-4, p-6, p-8
+m-0, m-1, m-2, m-3, m-4, m-6, m-8
+
+/* Dark Mode */
+dark:text-white, dark:bg-slate-900
+dark:border-gray-700
 
 /* Responsive */
-.sm:hidden, .md:block, .lg:flex
+sm:hidden, md:block, lg:flex
 ```
 
 ## 🚀 Getting Started
@@ -272,16 +309,19 @@ If development is still slow:
 
 ## 🌙 Theme Management
 
-The application supports light/dark mode with system preference detection:
+The application supports light/dark mode with Tailwind CSS:
 
 ```tsx
 import { useTheme } from '@/lib/theme';
 
 function ThemeToggle() {
-  const { theme, toggleTheme, effectiveTheme } = useTheme();
+  const { effectiveTheme, toggleTheme, mounted } = useTheme();
 
   return (
-    <button onClick={toggleTheme}>
+    <button
+      onClick={toggleTheme}
+      className='p-2 rounded-full text-text-body hover:bg-primary/6 dark:text-text-main dark:hover:bg-text-main/6'
+    >
       {effectiveTheme === 'dark' ? '🌙' : '☀️'}
     </button>
   );
