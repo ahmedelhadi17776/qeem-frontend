@@ -15,8 +15,9 @@ RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
 # Copy source files
 COPY . .
 
-# Ensure public directory exists and has content
-RUN ls -la /app/public/ || echo "Public directory not found"
+# Debug: Check what files exist
+RUN ls -la /app/ | head -20
+RUN ls -la /app/public/ 2>/dev/null || echo "Public directory not found in builder stage"
 
 # Set build-time environment variables
 ENV NEXT_TELEMETRY_DISABLED=1
@@ -37,7 +38,10 @@ RUN apk add --no-cache dumb-init
 # Copy built assets
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/public ./public
+
+# Copy public directory if it exists, create empty one if not
+RUN mkdir -p ./public
+COPY --from=builder /app/public/ ./public/
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs && \

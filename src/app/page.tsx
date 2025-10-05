@@ -47,7 +47,7 @@ function LandingPageContent() {
       </header>
 
       {/* Hero Section */}
-      <section className="min-h-screen bg-bg dark:bg-slate-900 flex items-center pt-16">
+      <main className="min-h-screen bg-bg dark:bg-slate-900 flex items-center pt-16">
         <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-16 items-center min-h-[calc(100vh-4rem)] px-4 lg:px-8 py-12 lg:py-20 max-w-7xl mx-auto w-full">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-sm font-medium mb-6">
@@ -164,7 +164,7 @@ function LandingPageContent() {
             </div>
           </div>
         </div>
-      </section>
+      </main>
 
       {/* Features Section */}
       <section className="py-20 bg-surface/30 dark:bg-slate-800/30">

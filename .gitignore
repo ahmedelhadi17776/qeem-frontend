@@ -70,6 +70,7 @@ coverage/
 
 # Next.js build output
 .next/
+.next/cache/
 out/
 dist/
 
