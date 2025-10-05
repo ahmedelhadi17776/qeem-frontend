@@ -2,24 +2,20 @@
 const nextConfig = {
   reactStrictMode: true,
   output: 'standalone', // For Docker optimization
-  
+
   // Performance optimizations (Turbopack compatible)
   experimental: {
-    optimizePackageImports: [
-      'clsx', 
-      'react-hook-form',
-      'zod'
-    ],
+    optimizePackageImports: ['clsx', 'react-hook-form', 'zod'],
   },
-  
+
   images: {
     domains: ['localhost', 'api.qeem.com'],
   },
-  
+
   // Simplified headers for dev performance
   async headers() {
     const isDev = process.env.NODE_ENV === 'development';
-    
+
     if (!isDev) {
       const prodCsp = [
         "default-src 'self'",
@@ -29,7 +25,7 @@ const nextConfig = {
         "connect-src 'self'",
         "object-src 'none'",
         "base-uri 'self'",
-        "form-action 'self'"
+        "form-action 'self'",
       ].join('; ');
 
       return [
@@ -44,10 +40,10 @@ const nextConfig = {
         },
       ];
     }
-    
+
     return [];
   },
-  
+
   // Webpack config for fallback (when not using Turbopack)
   webpack: (config, { dev, isServer }) => {
     if (dev) {
@@ -65,7 +61,7 @@ const nextConfig = {
         ],
       };
     }
-    
+
     return config;
   },
 };

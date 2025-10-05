@@ -1,8 +1,22 @@
-node_modules
-.next
-out
-dist
-coverage
-.turbo
-*.config.js
-package-lock.json
+# Dependencies
+node_modules/
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+.turbo/
+
+# Cache directories
+cache/
+.next/cache/
+
+# Logs
+*.log
+
+# Environment files
+.env*
+
+# Coverage
+coverage/

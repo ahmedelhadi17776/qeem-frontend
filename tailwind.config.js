@@ -16,7 +16,7 @@ module.exports = {
         },
         accent: {
           DEFAULT: '#22C55E', // q-green-growth
-          dark: '#16A34A',    // q-green-dark
+          dark: '#16A34A', // q-green-dark
         },
         // Semantic Colors
         danger: '#EF4444',
@@ -33,20 +33,28 @@ module.exports = {
         border: '#E2E8F0',
       },
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        sans: [
+          'Plus Jakarta Sans',
+          'system-ui',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Roboto',
+          'sans-serif',
+        ],
         arabic: ['IBM Plex Sans Arabic', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'Consolas', 'Liberation Mono', 'Menlo', 'Courier', 'monospace'],
       },
       fontSize: {
-        xs: ['0.75rem', { lineHeight: '1rem' }],    // 12px
+        xs: ['0.75rem', { lineHeight: '1rem' }], // 12px
         sm: ['0.875rem', { lineHeight: '1.25rem' }], // 14px
-        base: ['1rem', { lineHeight: '1.5rem' }],    // 16px
+        base: ['1rem', { lineHeight: '1.5rem' }], // 16px
         lg: ['1.125rem', { lineHeight: '1.75rem' }], // 18px
-        xl: ['1.25rem', { lineHeight: '1.75rem' }],  // 20px
-        '2xl': ['1.5rem', { lineHeight: '2rem' }],   // 24px
-        '3xl': ['2rem', { lineHeight: '2.25rem' }],  // 32px
+        xl: ['1.25rem', { lineHeight: '1.75rem' }], // 20px
+        '2xl': ['1.5rem', { lineHeight: '2rem' }], // 24px
+        '3xl': ['2rem', { lineHeight: '2.25rem' }], // 32px
         '4xl': ['2.5rem', { lineHeight: '2.5rem' }], // 40px
-        '5xl': ['3rem', { lineHeight: '1' }],        // 48px
+        '5xl': ['3rem', { lineHeight: '1' }], // 48px
       },
       fontWeight: {
         normal: '400',
@@ -56,15 +64,15 @@ module.exports = {
         extrabold: '800',
       },
       spacing: {
-        xs: '0.25rem',  // 4px
-        sm: '0.5rem',   // 8px
-        md: '1rem',     // 16px
-        lg: '1.5rem',   // 24px
-        xl: '2rem',     // 32px
-        '2xl': '3rem',  // 48px
-        '3xl': '4rem',  // 64px
-        '70': '17.5rem', // 280px for sidebar
-        '18': '4.5rem',  // 72px for mobile nav height
+        xs: '0.25rem', // 4px
+        sm: '0.5rem', // 8px
+        md: '1rem', // 16px
+        lg: '1.5rem', // 24px
+        xl: '2rem', // 32px
+        '2xl': '3rem', // 48px
+        '3xl': '4rem', // 64px
+        70: '17.5rem', // 280px for sidebar
+        18: '4.5rem', // 72px for mobile nav height
       },
       boxShadow: {
         sm: '0 1px 2px rgba(26, 43, 72, 0.05)',
@@ -79,11 +87,11 @@ module.exports = {
         'xl-dark': '0 16px 48px rgba(0, 0, 0, 0.6)',
       },
       borderRadius: {
-        sm: '0.5rem',   // 8px
+        sm: '0.5rem', // 8px
         DEFAULT: '0.75rem', // 12px
-        md: '0.75rem',  // 12px
-        lg: '1rem',     // 16px
-        xl: '1.25rem',  // 20px
+        md: '0.75rem', // 12px
+        lg: '1rem', // 16px
+        xl: '1.25rem', // 20px
         full: '9999px',
       },
       transitionDuration: {
@@ -113,4 +121,4 @@ module.exports = {
       strategy: 'class',
     }),
   ],
-}
+};

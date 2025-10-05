@@ -76,6 +76,7 @@ dist/
 
 # Next.js cache
 .next/cache/
+cache/
 
 # Vercel
 .vercel

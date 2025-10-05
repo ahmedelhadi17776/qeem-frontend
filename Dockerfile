@@ -19,6 +19,9 @@ COPY . .
 RUN ls -la /app/ | head -20
 RUN ls -la /app/public/ 2>/dev/null || echo "Public directory not found in builder stage"
 
+# Create public directory if it doesn't exist
+RUN mkdir -p /app/public
+
 # Set build-time environment variables
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
@@ -39,7 +42,7 @@ RUN apk add --no-cache dumb-init
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-# Copy public directory if it exists, create empty one if not
+# Copy public directory (will be empty if no files)
 RUN mkdir -p ./public
 COPY --from=builder /app/public/ ./public/
 
