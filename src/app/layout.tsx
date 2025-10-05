@@ -11,11 +11,19 @@ export const metadata = {
   authors: [{ name: 'Qeem Team' }],
   icons: {
     icon: [
-      { url: '/brand/qeem-mark.svg', sizes: 'any' },
-      { url: '/brand/qeem-mark.svg', sizes: '16x16', type: 'image/svg+xml' },
-      { url: '/brand/qeem-mark.svg', sizes: '32x32', type: 'image/svg+xml' },
+      { url: '/brand/qeem-mark-light.svg', sizes: 'any' },
+      {
+        url: '/brand/qeem-mark-light.svg',
+        sizes: '16x16',
+        type: 'image/svg+xml',
+      },
+      {
+        url: '/brand/qeem-mark-light.svg',
+        sizes: '32x32',
+        type: 'image/svg+xml',
+      },
     ],
-    apple: [{ url: '/brand/qeem-mark.svg', sizes: '180x180' }],
+    apple: [{ url: '/brand/qeem-mark-light.svg', sizes: '180x180' }],
   },
 };
 
@@ -26,13 +34,17 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang='en' data-theme='light'>
+    <html lang='en' suppressHydrationWarning>
       <head>
         <Script id='theme-init' strategy='beforeInteractive'>
           {`
             (function() {
-              const theme = localStorage.getItem('theme') || 'light';
-              document.documentElement.setAttribute('data-theme', theme);
+              try {
+                const theme = localStorage.getItem('theme') || 'light';
+                document.documentElement.setAttribute('data-theme', theme);
+              } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+              }
             })();
           `}
         </Script>

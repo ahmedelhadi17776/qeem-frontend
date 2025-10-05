@@ -1,6 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import { useTheme } from '@/lib/theme';
 
 // Lazy load components for better performance
 const Button = dynamic(
@@ -22,6 +25,8 @@ interface HeaderProps {
 }
 
 export function Header({ user, onLogout }: HeaderProps) {
+  const { theme, mounted } = useTheme();
+
   return (
     <header className='bg-surface dark:bg-slate-800 border-b border-border dark:border-slate-600 px-4 lg:px-8'>
       <div className='flex items-center justify-between h-16 max-w-7xl mx-auto'>
@@ -29,7 +34,11 @@ export function Header({ user, onLogout }: HeaderProps) {
           <Link href='/' className='flex items-center space-x-3'>
             <div className='hidden sm:block'>
               <Image
-                src='/brand/qeem-logo-horizontal-light.svg'
+                src={
+                  mounted && theme === 'dark'
+                    ? '/brand/qeem-logo-horizontal-dark.svg'
+                    : '/brand/qeem-logo-horizontal-light.svg'
+                }
                 alt='Qeem Logo'
                 width={168}
                 height={29}
@@ -39,7 +48,11 @@ export function Header({ user, onLogout }: HeaderProps) {
             </div>
             <div className='block sm:hidden'>
               <Image
-                src='/brand/qeem-mark.svg'
+                src={
+                  mounted && theme === 'dark'
+                    ? '/brand/qeem-mark.svg'
+                    : '/brand/qeem-mark-light.svg'
+                }
                 alt='Qeem'
                 width={32}
                 height={32}
