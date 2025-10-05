@@ -15,6 +15,9 @@ RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
 # Copy source files
 COPY . .
 
+# Ensure public directory exists and has content
+RUN ls -la /app/public/ || echo "Public directory not found"
+
 # Set build-time environment variables
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
