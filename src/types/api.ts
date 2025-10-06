@@ -36,6 +36,22 @@ export interface User {
   created_at: string;
 }
 
+export interface UserProfile extends User {
+  first_name: string | null;
+  last_name: string | null;
+  phone: string | null;
+  bio: string | null;
+  profession: string | null;
+  experience_years: number | null;
+  skills: string | null;
+  portfolio_url: string | null;
+  linkedin_url: string | null;
+  city: string | null;
+  country: string | null;
+  preferred_currency: string | null;
+  hourly_rate_preference: number | null;
+}
+
 export interface TokenResponse {
   access_token: string;
   token_type: string;
@@ -46,8 +62,15 @@ export interface AuthResponse extends TokenResponse {
   user: User;
 }
 
+export interface RateHistoryItem extends RateResponse {
+  id?: number;
+  created_at?: string;
+  project_type?: string;
+  project_complexity?: string;
+}
+
 export interface RateHistoryResponse {
-  items: RateResponse[];
+  items: RateHistoryItem[];
 }
 
 export interface ApiError {

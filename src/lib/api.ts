@@ -1,4 +1,12 @@
-import { RateRequest, RateResponse, User, ApiError, TokenResponse, RateHistoryResponse } from '@/types/api';
+import {
+  RateRequest,
+  RateResponse,
+  User,
+  UserProfile,
+  ApiError,
+  TokenResponse,
+  RateHistoryResponse,
+} from '@/types/api';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000';
 
@@ -81,6 +89,17 @@ export class ApiClient {
 
   async getCurrentUser(): Promise<User> {
     return this.request<User>('/api/v1/auth/me');
+  }
+
+  async getUserProfile(): Promise<UserProfile> {
+    return this.request<UserProfile>('/api/v1/users/profile');
+  }
+
+  async updateUserProfile(data: Partial<UserProfile>): Promise<UserProfile> {
+    return this.request<UserProfile>('/api/v1/users/profile', {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
   }
 
   // Rate Calculator

@@ -67,7 +67,8 @@ const urgencyLevels = [
 ];
 
 export function RateCalculatorForm() {
-  const { calculateRate, loading, error, results, isAuthenticated } = useRateCalculation();
+  const { calculateRate, loading, error, results, isAuthenticated, history, historyLoading, historyError } =
+    useRateCalculation();
 
   const {
     register,
@@ -258,6 +259,81 @@ export function RateCalculatorForm() {
                   <p className="text-text-muted dark:text-slate-400 text-sm">Premium rate for high-value clients</p>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Rate Calculation History */}
+          {isAuthenticated && (
+            <div className="mt-8">
+              <h2 className="text-2xl font-bold text-text-main dark:text-slate-100 mb-6">Recent Calculations</h2>
+
+              {historyLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent" />
+                  <span className="ml-2 text-text-body dark:text-slate-300">Loading history...</span>
+                </div>
+              ) : historyError ? (
+                <div className="p-4 bg-danger/10 border border-danger rounded-md">
+                  <p className="text-danger text-sm">{historyError}</p>
+                </div>
+              ) : history.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {history.slice(0, 6).map(item => (
+                    <div
+                      key={item.id ?? item.created_at ?? Math.random()}
+                      className="bg-surface dark:bg-slate-800 border border-border dark:border-slate-600 rounded-lg p-4"
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-sm font-medium text-text-main dark:text-slate-100 capitalize">
+                          {item.project_type?.replace('_', ' ')}
+                        </h3>
+                        <span className="text-xs text-text-muted dark:text-slate-400 capitalize">
+                          {item.project_complexity}
+                        </span>
+                      </div>
+
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-text-muted dark:text-slate-400">Min:</span>
+                          <span className="font-mono text-text-main dark:text-slate-100">
+                            {item.minimum_rate} {item.currency}
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-text-muted dark:text-slate-400">Competitive:</span>
+                          <span className="font-mono font-semibold text-accent">
+                            {item.competitive_rate} {item.currency}
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-text-muted dark:text-slate-400">Premium:</span>
+                          <span className="font-mono text-text-main dark:text-slate-100">
+                            {item.premium_rate} {item.currency}
+                          </span>
+                        </div>
+                      </div>
+
+                      {item.created_at && (
+                        <div className="mt-3 pt-3 border-t border-border dark:border-slate-600">
+                          <p className="text-xs text-text-muted dark:text-slate-400">
+                            {new Date(item.created_at).toLocaleDateString()}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">📊</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-text-main dark:text-slate-100 mb-2">No calculations yet</h3>
+                  <p className="text-text-body dark:text-slate-300">
+                    Your rate calculations will appear here once you start using the calculator.
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </CardBody>
