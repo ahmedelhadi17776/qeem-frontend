@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient, handleApiError } from '@/lib/api';
 import { RateRequest, RateResponse } from '@/types/api';
 import { useAuth } from '@/contexts/AuthContext';
@@ -7,6 +7,28 @@ import { useAuth } from '@/contexts/AuthContext';
 export function useRateCalculation() {
   const [results, setResults] = useState<RateResponse | null>(null);
   const { isAuthenticated } = useAuth();
+  const queryClient = useQueryClient();
+
+  // Fetch rate history
+  const {
+    data: history,
+    isLoading: historyLoading,
+    error: historyError,
+  } = useQuery({
+    queryKey: ['rateHistory'],
+    queryFn: () => apiClient.getRateHistory(),
+    enabled: isAuthenticated,
+    retry: (failureCount, error) => {
+      // Don't retry on 401/403 errors
+      if (error && typeof error === 'object' && 'status' in error) {
+        const status = (error as { status: number }).status;
+        if (status === 401 || status === 403) {
+          return false;
+        }
+      }
+      return failureCount < 3;
+    },
+  });
 
   const mutation = useMutation({
     mutationFn: (data: RateRequest) => {
@@ -17,6 +39,8 @@ export function useRateCalculation() {
     },
     onSuccess: data => {
       setResults(data);
+      // Invalidate history cache to refresh the list
+      queryClient.invalidateQueries({ queryKey: ['rateHistory'] });
     },
     onError: error => {
       console.error('Rate calculation failed:', handleApiError(error));
@@ -43,5 +67,8 @@ export function useRateCalculation() {
     error: mutation.error ? handleApiError(mutation.error) : null,
     reset,
     isAuthenticated,
+    history: history?.items ?? [],
+    historyLoading,
+    historyError: historyError ? handleApiError(historyError) : null,
   };
 }
