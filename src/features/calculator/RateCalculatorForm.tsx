@@ -8,12 +8,29 @@ import { useRateCalculation } from '@/hooks/useRateCalculation';
 import { RateRequest } from '@/types/api';
 
 const rateCalculatorSchema = z.object({
-  project_type: z.string().min(1, 'Project type is required'),
-  project_complexity: z.string().min(1, 'Project complexity is required'),
-  estimated_hours: z.number().min(1, 'Estimated hours must be at least 1'),
-  experience_years: z.number().min(0, 'Experience years cannot be negative'),
-  skills_count: z.number().min(1, 'Skills count must be at least 1'),
+  project_type: z.enum([
+    'web_development',
+    'mobile_development',
+    'design',
+    'writing',
+    'marketing',
+    'consulting',
+    'data_analysis',
+    'other',
+  ]),
+  project_complexity: z.enum(['simple', 'moderate', 'complex', 'enterprise']),
+  estimated_hours: z
+    .number()
+    .min(1, 'Estimated hours must be at least 1')
+    .max(2000, 'Estimated hours cannot exceed 2000'),
+  experience_years: z
+    .number()
+    .min(0, 'Experience years cannot be negative')
+    .max(50, 'Experience years cannot exceed 50'),
+  skills_count: z.number().min(0, 'Skills count cannot be negative').max(100, 'Skills count cannot exceed 100'),
   location: z.string().min(1, 'Location is required'),
+  client_region: z.enum(['egypt', 'mena', 'europe', 'usa', 'global']),
+  urgency: z.enum(['normal', 'rush']),
 });
 
 type RateCalculatorFormData = z.infer<typeof rateCalculatorSchema>;
@@ -21,10 +38,12 @@ type RateCalculatorFormData = z.infer<typeof rateCalculatorSchema>;
 const projectTypes = [
   { value: 'web_development', label: 'Web Development' },
   { value: 'mobile_development', label: 'Mobile Development' },
-  { value: 'data_science', label: 'Data Science' },
   { value: 'design', label: 'Design' },
   { value: 'writing', label: 'Writing' },
   { value: 'marketing', label: 'Marketing' },
+  { value: 'consulting', label: 'Consulting' },
+  { value: 'data_analysis', label: 'Data Analysis' },
+  { value: 'other', label: 'Other' },
 ];
 
 const complexityLevels = [
@@ -34,8 +53,21 @@ const complexityLevels = [
   { value: 'enterprise', label: 'Enterprise' },
 ];
 
+const clientRegions = [
+  { value: 'egypt', label: 'Egypt' },
+  { value: 'mena', label: 'MENA Region' },
+  { value: 'europe', label: 'Europe' },
+  { value: 'usa', label: 'USA' },
+  { value: 'global', label: 'Global' },
+];
+
+const urgencyLevels = [
+  { value: 'normal', label: 'Normal' },
+  { value: 'rush', label: 'Rush' },
+];
+
 export function RateCalculatorForm() {
-  const { calculateRate, loading, error, results } = useRateCalculation();
+  const { calculateRate, loading, error, results, isAuthenticated } = useRateCalculation();
 
   const {
     register,
@@ -44,12 +76,14 @@ export function RateCalculatorForm() {
   } = useForm<RateCalculatorFormData>({
     resolver: zodResolver(rateCalculatorSchema),
     defaultValues: {
-      project_type: '',
-      project_complexity: '',
+      project_type: 'web_development',
+      project_complexity: 'moderate',
       estimated_hours: 40,
       experience_years: 2,
       skills_count: 3,
       location: 'Cairo, Egypt',
+      client_region: 'egypt',
+      urgency: 'normal',
     },
   });
 
@@ -65,6 +99,13 @@ export function RateCalculatorForm() {
           <p className="text-text-body dark:text-slate-300">
             Calculate your freelance rate based on your skills and experience.
           </p>
+          {isAuthenticated && (
+            <div className="mt-4 p-3 bg-accent/10 border border-accent/20 rounded-md">
+              <p className="text-accent text-sm font-medium">
+                ✓ You&apos;re logged in! Your calculations will be saved to your history.
+              </p>
+            </div>
+          )}
         </CardHeader>
         <CardBody>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -136,6 +177,46 @@ export function RateCalculatorForm() {
               />
 
               <Input label="Location" {...register('location')} error={errors.location?.message} />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="client_region" className="text-sm font-semibold text-text-main dark:text-slate-100">
+                  Client Region
+                </label>
+                <select
+                  id="client_region"
+                  className="w-full bg-surface dark:bg-slate-800 border-2 border-border dark:border-slate-600 rounded-md px-4 py-3.5 text-base text-text-main dark:text-slate-100 font-inherit transition-all duration-DEFAULT ease-out placeholder:text-text-muted dark:placeholder:text-slate-400 placeholder:opacity-70 focus:border-accent focus:ring-4 focus:ring-accent/10 focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-bg dark:disabled:bg-slate-900"
+                  {...register('client_region')}
+                >
+                  {clientRegions.map(region => (
+                    <option key={region.value} value={region.value}>
+                      {region.label}
+                    </option>
+                  ))}
+                </select>
+                {errors.client_region && (
+                  <span className="block mt-1 text-sm text-danger">{errors.client_region.message}</span>
+                )}
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="urgency" className="text-sm font-semibold text-text-main dark:text-slate-100">
+                  Project Urgency
+                </label>
+                <select
+                  id="urgency"
+                  className="w-full bg-surface dark:bg-slate-800 border-2 border-border dark:border-slate-600 rounded-md px-4 py-3.5 text-base text-text-main dark:text-slate-100 font-inherit transition-all duration-DEFAULT ease-out placeholder:text-text-muted dark:placeholder:text-slate-400 placeholder:opacity-70 focus:border-accent focus:ring-4 focus:ring-accent/10 focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-bg dark:disabled:bg-slate-900"
+                  {...register('urgency')}
+                >
+                  {urgencyLevels.map(level => (
+                    <option key={level.value} value={level.value}>
+                      {level.label}
+                    </option>
+                  ))}
+                </select>
+                {errors.urgency && <span className="block mt-1 text-sm text-danger">{errors.urgency.message}</span>}
+              </div>
             </div>
 
             {error && (
