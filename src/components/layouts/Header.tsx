@@ -4,22 +4,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { useTheme } from '@/lib/theme';
+import { useAuth } from '@/contexts/AuthContext';
 
 // Lazy load components for better performance
 const Button = dynamic(() => import('@/components/ui').then(mod => ({ default: mod.Button })), { ssr: true });
 
 const ThemeToggle = dynamic(() => import('@/components/ui').then(mod => ({ default: mod.ThemeToggle })), { ssr: true });
 
-interface HeaderProps {
-  user?: {
-    name: string;
-    email: string;
-  } | null;
-  onLogout?: () => void;
-}
-
-export function Header({ user, onLogout }: HeaderProps) {
+export function Header() {
   const { theme, mounted } = useTheme();
+  const { user, logout, isAuthenticated } = useAuth();
 
   return (
     <header className="bg-surface dark:bg-slate-800 border-b border-border dark:border-slate-600 px-4 lg:px-8">
@@ -55,25 +49,20 @@ export function Header({ user, onLogout }: HeaderProps) {
 
         <div className="flex items-center space-x-4">
           <ThemeToggle />
-          {user ? (
+          {isAuthenticated && user ? (
             <div className="flex items-center space-x-4">
               <span className="text-sm font-medium text-text-main dark:text-slate-100 hidden sm:block">
-                {user.name}
+                {user.email}
               </span>
-              <Button variant="ghost" size="sm" onClick={onLogout}>
+              <Button variant="ghost" size="sm" onClick={logout}>
                 Logout
               </Button>
             </div>
           ) : (
             <div className="flex items-center space-x-3">
-              <Link href="/login">
+              <Link href="/auth">
                 <Button variant="ghost" size="sm">
                   Login
-                </Button>
-              </Link>
-              <Link href="/register">
-                <Button variant="primary" size="sm">
-                  Sign Up
                 </Button>
               </Link>
             </div>

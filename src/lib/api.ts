@@ -1,4 +1,4 @@
-import { RateRequest, RateResponse, AuthResponse, User, ApiError } from '@/types/api';
+import { RateRequest, RateResponse, User, ApiError, TokenResponse, RateHistoryResponse } from '@/types/api';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000';
 
@@ -32,6 +32,18 @@ export class ApiClient {
     });
 
     if (!response.ok) {
+      // Handle 401/403 authentication errors
+      if (response.status === 401 || response.status === 403) {
+        // Clear invalid token
+        this.clearToken();
+        localStorage.removeItem('auth_token');
+
+        // Redirect to login page if we're in the browser
+        if (typeof window !== 'undefined') {
+          window.location.href = '/auth';
+        }
+      }
+
       const errorData = await response.json().catch(() => ({}));
       const error: ApiError = {
         message: errorData.message ?? `API Error: ${response.statusText}`,
@@ -45,26 +57,27 @@ export class ApiClient {
   }
 
   // Authentication
-  async login(email: string, password: string): Promise<AuthResponse> {
-    return this.request<AuthResponse>('/api/v1/auth/login', {
+  async login(email: string, password: string): Promise<TokenResponse> {
+    return this.request<TokenResponse>('/api/v1/auth/login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     });
   }
 
-  async register(userData: { email: string; password: string; name: string }): Promise<AuthResponse> {
-    return this.request<AuthResponse>('/api/v1/auth/register', {
+  async register(userData: { email: string; password: string; first_name: string; last_name: string }): Promise<User> {
+    return this.request<User>('/api/v1/auth/register', {
       method: 'POST',
       body: JSON.stringify(userData),
     });
   }
 
-  async refreshToken(refreshToken: string): Promise<AuthResponse> {
-    return this.request<AuthResponse>('/api/v1/auth/refresh', {
-      method: 'POST',
-      body: JSON.stringify({ refresh_token: refreshToken }),
-    });
-  }
+  // Note: Refresh token endpoint not implemented in backend yet
+  // async refreshToken(refreshToken: string): Promise<TokenResponse> {
+  //   return this.request<TokenResponse>('/api/v1/auth/refresh', {
+  //     method: 'POST',
+  //     body: JSON.stringify({ refresh_token: refreshToken }),
+  //   });
+  // }
 
   async getCurrentUser(): Promise<User> {
     return this.request<User>('/api/v1/auth/me');
@@ -78,8 +91,8 @@ export class ApiClient {
     });
   }
 
-  async getRateHistory(): Promise<RateResponse[]> {
-    return this.request<RateResponse[]>('/api/v1/rates/history');
+  async getRateHistory(): Promise<RateHistoryResponse> {
+    return this.request<RateHistoryResponse>('/api/v1/rates/history');
   }
 
   // Health check
