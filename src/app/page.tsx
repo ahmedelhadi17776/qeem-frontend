@@ -39,7 +39,7 @@ function LandingPageContent() {
 
           <div className="flex items-center space-x-2 sm:space-x-4">
             <ThemeToggle />
-            <Link href="/calculator">
+            <Link href="/auth">
               <Button size="sm">Get Started</Button>
             </Link>
           </div>

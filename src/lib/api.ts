@@ -6,6 +6,10 @@ import {
   ApiError,
   TokenResponse,
   RateHistoryResponse,
+  MarketStatisticsQuery,
+  MarketStatisticsResponse,
+  MarketTrendsQuery,
+  MarketTrendsResponse,
 } from '@/types/api';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000';
@@ -13,6 +17,8 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000';
 export class ApiClient {
   private baseURL: string;
   private token?: string;
+  private refreshToken?: string;
+  private isRefreshing = false;
 
   constructor(baseURL: string = API_BASE_URL) {
     this.baseURL = baseURL;
@@ -22,8 +28,13 @@ export class ApiClient {
     this.token = token;
   }
 
+  setRefreshToken(refreshToken: string) {
+    this.refreshToken = refreshToken;
+  }
+
   clearToken() {
     this.token = undefined;
+    this.refreshToken = undefined;
   }
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
@@ -39,12 +50,43 @@ export class ApiClient {
       headers,
     });
 
+    // Handle 401 errors with automatic token refresh
+    if (response.status === 401 && this.refreshToken && !this.isRefreshing) {
+      try {
+        this.isRefreshing = true;
+        const refreshed = await this.refreshAccessToken();
+
+        if (refreshed) {
+          // Retry the original request with new token
+          const retryHeaders: HeadersInit = {
+            'Content-Type': 'application/json',
+            ...(this.token && { Authorization: `Bearer ${this.token}` }),
+            ...options.headers,
+          };
+
+          const retryResponse = await fetch(url, {
+            ...options,
+            headers: retryHeaders,
+          });
+
+          if (retryResponse.ok) {
+            return retryResponse.json();
+          }
+        }
+      } catch (refreshError) {
+        console.error('Token refresh failed:', refreshError);
+      } finally {
+        this.isRefreshing = false;
+      }
+    }
+
     if (!response.ok) {
       // Handle 401/403 authentication errors
       if (response.status === 401 || response.status === 403) {
-        // Clear invalid token
+        // Clear invalid tokens
         this.clearToken();
         localStorage.removeItem('auth_token');
+        localStorage.removeItem('refresh_token');
 
         // Redirect to login page if we're in the browser
         if (typeof window !== 'undefined') {
@@ -79,16 +121,76 @@ export class ApiClient {
     });
   }
 
-  // Note: Refresh token endpoint not implemented in backend yet
-  // async refreshToken(refreshToken: string): Promise<TokenResponse> {
-  //   return this.request<TokenResponse>('/api/v1/auth/refresh', {
-  //     method: 'POST',
-  //     body: JSON.stringify({ refresh_token: refreshToken }),
-  //   });
-  // }
+  async refreshAccessToken(): Promise<boolean> {
+    if (!this.refreshToken) {
+      return false;
+    }
+
+    try {
+      const response = await fetch(`${this.baseURL}/api/v1/auth/refresh`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ refresh_token: this.refreshToken }),
+      });
+
+      if (response.ok) {
+        const tokenData: TokenResponse = await response.json();
+        this.setToken(tokenData.access_token);
+        this.setRefreshToken(tokenData.refresh_token);
+
+        // Update localStorage
+        localStorage.setItem('auth_token', tokenData.access_token);
+        localStorage.setItem('refresh_token', tokenData.refresh_token);
+
+        return true;
+      }
+    } catch (error) {
+      console.error('Refresh token request failed:', error);
+    }
+
+    return false;
+  }
+
+  async logout(): Promise<void> {
+    if (this.refreshToken) {
+      try {
+        await fetch(`${this.baseURL}/api/v1/auth/logout`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ refresh_token: this.refreshToken }),
+        });
+      } catch (error) {
+        console.error('Logout request failed:', error);
+      }
+    }
+
+    // Clear tokens regardless of API call success
+    this.clearToken();
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('refresh_token');
+  }
 
   async getCurrentUser(): Promise<User> {
     return this.request<User>('/api/v1/auth/me');
+  }
+
+  // Email verification
+  async verifyEmail(token: string): Promise<{ message: string; user_id: number }> {
+    return this.request<{ message: string; user_id: number }>('/api/v1/auth/verify-email', {
+      method: 'POST',
+      body: JSON.stringify({ token }),
+    });
+  }
+
+  async resendVerificationEmail(email: string): Promise<{ message: string }> {
+    return this.request<{ message: string }>('/api/v1/auth/resend-verification', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    });
   }
 
   async getUserProfile(): Promise<UserProfile> {
@@ -112,6 +214,38 @@ export class ApiClient {
 
   async getRateHistory(): Promise<RateHistoryResponse> {
     return this.request<RateHistoryResponse>('/api/v1/rates/history');
+  }
+
+  // Market Data
+  async getMarketStatistics(query: MarketStatisticsQuery): Promise<MarketStatisticsResponse> {
+    const params = new URLSearchParams();
+
+    if (query.project_type) params.append('project_type', query.project_type);
+    if (query.location) params.append('location', query.location);
+    if (query.period_type) params.append('period_type', query.period_type);
+    if (query.date_from) params.append('date_from', query.date_from);
+    if (query.date_to) params.append('date_to', query.date_to);
+    if (query.limit) params.append('limit', query.limit.toString());
+    if (query.offset) params.append('offset', query.offset.toString());
+
+    const queryString = params.toString();
+    const endpoint = `/api/v1/market/statistics${queryString ? `?${queryString}` : ''}`;
+
+    return this.request<MarketStatisticsResponse>(endpoint);
+  }
+
+  async getMarketTrends(query: MarketTrendsQuery): Promise<MarketTrendsResponse> {
+    const params = new URLSearchParams();
+
+    if (query.project_type) params.append('project_type', query.project_type);
+    if (query.location) params.append('location', query.location);
+    if (query.period_type) params.append('period_type', query.period_type);
+    if (query.window) params.append('window', query.window.toString());
+
+    const queryString = params.toString();
+    const endpoint = `/api/v1/market/trends${queryString ? `?${queryString}` : ''}`;
+
+    return this.request<MarketTrendsResponse>(endpoint);
   }
 
   // Health check

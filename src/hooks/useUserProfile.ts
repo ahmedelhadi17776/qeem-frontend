@@ -1,19 +1,22 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient, handleApiError } from '@/lib/api';
 import { UserProfile } from '@/types/api';
+import { useAuth } from '@/contexts/AuthContext';
 
 export function useUserProfile() {
   const queryClient = useQueryClient();
+  const { user, isAuthenticated } = useAuth();
 
-  // Fetch user profile
+  // Fetch user profile with user-specific cache key
   const {
     data: profile,
     isLoading,
     error,
     refetch,
   } = useQuery({
-    queryKey: ['userProfile'],
+    queryKey: ['userProfile', user?.id],
     queryFn: () => apiClient.getUserProfile(),
+    enabled: isAuthenticated && !!user?.id,
     retry: (failureCount, error) => {
       // Don't retry on 401/403 errors
       if (error && typeof error === 'object' && 'status' in error) {
@@ -30,11 +33,11 @@ export function useUserProfile() {
   const updateProfileMutation = useMutation({
     mutationFn: (data: Partial<UserProfile>) => apiClient.updateUserProfile(data),
     onSuccess: updatedProfile => {
-      // Update the cache with the new profile data
-      queryClient.setQueryData(['userProfile'], updatedProfile);
+      // Update the cache with the new profile data (user-specific)
+      queryClient.setQueryData(['userProfile', user?.id], updatedProfile);
 
       // Invalidate related queries to ensure fresh data
-      queryClient.invalidateQueries({ queryKey: ['userProfile'] });
+      queryClient.invalidateQueries({ queryKey: ['userProfile', user?.id] });
     },
     onError: error => {
       console.error('Profile update failed:', handleApiError(error));
