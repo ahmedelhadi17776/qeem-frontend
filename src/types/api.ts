@@ -54,6 +54,7 @@ export interface UserProfile extends User {
 
 export interface TokenResponse {
   access_token: string;
+  refresh_token: string;
   token_type: string;
   expires_in: number;
 }
@@ -106,4 +107,65 @@ export interface Contract {
   end_date?: string;
   rate: number;
   currency: string;
+}
+
+export interface EmailVerificationRequest {
+  token: string;
+}
+
+export interface ResendVerificationRequest {
+  email: string;
+}
+
+export interface MarketStatisticsQuery {
+  project_type?: string;
+  location?: string;
+  period_type?: 'daily' | 'weekly' | 'monthly';
+  date_from?: string;
+  date_to?: string;
+  limit?: number;
+  offset?: number;
+}
+
+export interface MarketStatisticsItem {
+  date: string;
+  period_type: string;
+  project_type: string;
+  location: string;
+  average_rate: number;
+  median_rate: number;
+  min_rate: number;
+  max_rate: number;
+  demand_score?: number;
+  competition_score?: number;
+  market_trend?: string;
+}
+
+export interface MarketStatisticsResponse {
+  items: MarketStatisticsItem[];
+  total: number;
+  limit: number;
+  offset: number;
+  cached: boolean;
+}
+
+export interface MarketTrendsQuery {
+  project_type?: string;
+  location?: string;
+  period_type?: 'daily' | 'weekly' | 'monthly';
+  window?: number;
+}
+
+export interface MarketTrendsPoint {
+  period_start: string;
+  period_end?: string;
+  average_rate: number;
+  median_rate: number;
+  demand_score?: number;
+  market_trend?: string;
+}
+
+export interface MarketTrendsResponse {
+  points: MarketTrendsPoint[];
+  cached: boolean;
 }

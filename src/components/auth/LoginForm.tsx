@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button, Input, Card, CardHeader, CardBody } from '@/components/ui';
 import { handleApiError } from '@/lib/api';
@@ -22,7 +23,9 @@ interface LoginFormProps {
 export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showVerificationPrompt, setShowVerificationPrompt] = useState(false);
   const { login } = useAuth();
+  const router = useRouter();
 
   const {
     register,
@@ -35,11 +38,24 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
     setError(null);
+    setShowVerificationPrompt(false);
 
     try {
       await login(data.email, data.password);
     } catch (err) {
-      setError(handleApiError(err));
+      const errorMessage = handleApiError(err);
+
+      // Check if error indicates unverified email
+      if (
+        errorMessage.toLowerCase().includes('unverified') ||
+        errorMessage.toLowerCase().includes('verify') ||
+        errorMessage.toLowerCase().includes('email')
+      ) {
+        setShowVerificationPrompt(true);
+        setError('Please verify your email address before signing in.');
+      } else {
+        setError(errorMessage);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -72,6 +88,33 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
           {error && (
             <div className="p-3 bg-danger/10 border border-danger rounded-md">
               <p className="text-danger text-sm">{error}</p>
+              {showVerificationPrompt && (
+                <div className="mt-3 space-y-2">
+                  <p className="text-xs text-text-muted dark:text-slate-400">
+                    Check your email for a verification link, or resend it if needed.
+                  </p>
+                  <div className="flex space-x-2">
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => router.push('/auth/verify-prompt')}
+                      className="flex-1"
+                    >
+                      Resend Email
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => setShowVerificationPrompt(false)}
+                      className="flex-1"
+                    >
+                      Try Again
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 

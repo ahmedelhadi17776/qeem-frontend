@@ -6,18 +6,18 @@ import { useAuth } from '@/contexts/AuthContext';
 
 export function useRateCalculation() {
   const [results, setResults] = useState<RateResponse | null>(null);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const queryClient = useQueryClient();
 
-  // Fetch rate history
+  // Fetch rate history with user-specific cache key
   const {
     data: history,
     isLoading: historyLoading,
     error: historyError,
   } = useQuery({
-    queryKey: ['rateHistory'],
+    queryKey: ['rateHistory', user?.id],
     queryFn: () => apiClient.getRateHistory(),
-    enabled: isAuthenticated,
+    enabled: isAuthenticated && !!user?.id,
     retry: (failureCount, error) => {
       // Don't retry on 401/403 errors
       if (error && typeof error === 'object' && 'status' in error) {
@@ -39,8 +39,8 @@ export function useRateCalculation() {
     },
     onSuccess: data => {
       setResults(data);
-      // Invalidate history cache to refresh the list
-      queryClient.invalidateQueries({ queryKey: ['rateHistory'] });
+      // Invalidate history cache to refresh the list (user-specific)
+      queryClient.invalidateQueries({ queryKey: ['rateHistory', user?.id] });
     },
     onError: error => {
       console.error('Rate calculation failed:', handleApiError(error));
