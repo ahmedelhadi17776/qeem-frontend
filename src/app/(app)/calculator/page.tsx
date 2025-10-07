@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import { AuthGuard } from '@/components/auth/AuthGuard';
 
 // Dynamic import for the calculator form to reduce initial bundle size
 const RateCalculatorForm = dynamic(
@@ -12,5 +13,9 @@ const RateCalculatorForm = dynamic(
 );
 
 export default function CalculatorPage() {
-  return <RateCalculatorForm />;
+  return (
+    <AuthGuard>
+      <RateCalculatorForm />
+    </AuthGuard>
+  );
 }
